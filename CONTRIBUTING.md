@@ -1,10 +1,10 @@
-# Contributing to Jietu | 贡献指南
+# Contributing to OpenCap | 贡献指南
 
 [English](#english) | [中文](#中文)
 
 ## English
 
-Thank you for your interest in contributing to Jietu! 🎉
+Thank you for your interest in contributing to OpenCap! 🎉
 
 We welcome contributions of all kinds, including bug reports, feature requests, documentation improvements, and code contributions.
 
@@ -43,8 +43,8 @@ We recommend using one of the following IDEs:
 
 1. **Fork and Clone**
    ```bash
-   git clone https://github.com/yourusername/jietu.git
-   cd jietu
+   git clone https://github.com/yourusername/openCap.git
+   cd openCap
    ```
 
 2. **Configure Development Build**
@@ -61,8 +61,8 @@ We recommend using one of the following IDEs:
    cmake --build . --config Debug  # Cross-platform
    
    # Run the application
-   ./jietu-qt.app/Contents/MacOS/jietu-qt  # macOS
-   ./jietu-qt  # Linux
+   ./openCap.app/Contents/MacOS/openCap  # macOS
+   ./openCap  # Linux
    ```
 
 ## 🔄 Making Changes
@@ -155,7 +155,7 @@ test: add unit tests for SystemTray class
 
 #include <QWidget>
 #include <QPixmap>
-#include "jietu/SomeOtherClass.h"
+#include "openCap/SomeOtherClass.h"
 
 class ScreenshotOverlay : public QWidget {
     Q_OBJECT
@@ -255,17 +255,17 @@ Contributors will be recognized in:
 
 ## 📄 License
 
-By contributing to Jietu, you agree that your contributions will be licensed under the same [MIT License](LICENSE) that covers the project.
+By contributing to OpenCap, you agree that your contributions will be licensed under the same [MIT License](LICENSE) that covers the project.
 
 ---
 
-Thank you for contributing to Jietu! 🚀
+Thank you for contributing to OpenCap! 🚀
 
 ---
 
 ## 中文
 
-感谢您对贡献Jietu项目的兴趣！🎉
+感谢您对贡献OpenCap项目的兴趣！🎉
 
 我们欢迎各种形式的贡献，包括错误报告、功能请求、文档改进和代码贡献。
 
@@ -304,8 +304,8 @@ Thank you for contributing to Jietu! 🚀
 
 1. **分叉和克隆**
    ```bash
-   git clone https://github.com/yourusername/jietu.git
-   cd jietu
+   git clone https://github.com/yourusername/openCap.git
+   cd openCap
    ```
 
 2. **配置开发构建**
@@ -322,8 +322,8 @@ Thank you for contributing to Jietu! 🚀
    cmake --build . --config Debug  # 跨平台
    
    # 运行应用程序
-   ./jietu-qt.app/Contents/MacOS/jietu-qt  # macOS
-   ./jietu-qt  # Linux
+   ./openCap.app/Contents/MacOS/openCap  # macOS
+   ./openCap  # Linux
    ```
 
 ## 🔄 进行更改
@@ -416,7 +416,7 @@ test: 为SystemTray类添加单元测试
 
 #include <QWidget>
 #include <QPixmap>
-#include "jietu/SomeOtherClass.h"
+#include "openCap/SomeOtherClass.h"
 
 class ScreenshotOverlay : public QWidget {
     Q_OBJECT
@@ -516,8 +516,8 @@ doxygen Doxyfile
 
 ## 📄 许可证
 
-通过为Jietu做贡献，您同意您的贡献将在与项目相同的[MIT许可证](LICENSE)下授权。
+通过为OpenCap做贡献，您同意您的贡献将在与项目相同的[MIT许可证](LICENSE)下授权。
 
 ---
 
-感谢您为Jietu做贡献！🚀 
+感谢您为OpenCap做贡献！🚀 

@@ -6,7 +6,7 @@
 
 ## 🔒 Supported Versions
 
-We actively support the following versions of Jietu with security updates:
+We actively support the following versions of OpenCap with security updates:
 
 | Version | Supported          | Notes                    |
 | ------- | ------------------ | ------------------------ |
@@ -15,7 +15,7 @@ We actively support the following versions of Jietu with security updates:
 
 ## 🚨 Reporting a Vulnerability
 
-We take security vulnerabilities seriously. If you discover a security vulnerability in Jietu, please follow the responsible disclosure process outlined below.
+We take security vulnerabilities seriously. If you discover a security vulnerability in OpenCap, please follow the responsible disclosure process outlined below.
 
 ### 📧 How to Report
 
@@ -71,7 +71,7 @@ The following are generally considered out of scope:
 
 ### 🏆 Recognition
 
-We appreciate security researchers who help us maintain the security of Jietu:
+We appreciate security researchers who help us maintain the security of OpenCap:
 
 - **Acknowledgment**: We will acknowledge your contribution in our security advisories (with your permission)
 - **Hall of Fame**: Security researchers will be recognized in our project documentation
@@ -98,7 +98,7 @@ We appreciate security researchers who help us maintain the security of Jietu:
 
 Security advisories will be published at:
 
-- **GitHub Security Advisories**: [GitHub Security Tab](https://github.com/yourusername/jietu/security/advisories)
+- **GitHub Security Advisories**: [GitHub Security Tab](https://github.com/yourusername/openCap/security/advisories)
 - **Release Notes**: Security fixes will be documented in release notes
 - **CHANGELOG.md**: Security-related changes will be noted in our changelog
 
@@ -127,7 +127,7 @@ For general questions about this security policy:
 
 ### 🙏 Thank You
 
-We appreciate the security research community's efforts to help keep Jietu and our users safe. Responsible disclosure helps us protect our users while giving us the opportunity to fix vulnerabilities before they can be exploited.
+We appreciate the security research community's efforts to help keep OpenCap and our users safe. Responsible disclosure helps us protect our users while giving us the opportunity to fix vulnerabilities before they can be exploited.
 
 ---
 
@@ -140,7 +140,7 @@ We appreciate the security research community's efforts to help keep Jietu and o
 
 ## 🔒 支持的版本
 
-我们为以下版本的Jietu提供安全更新支持：
+我们为以下版本的OpenCap提供安全更新支持：
 
 | 版本    | 支持状态          | 说明                    |
 | ------- | ------------------ | ------------------------ |
@@ -149,7 +149,7 @@ We appreciate the security research community's efforts to help keep Jietu and o
 
 ## 🚨 报告漏洞
 
-我们认真对待安全漏洞。如果您发现Jietu中的安全漏洞，请遵循下面概述的负责任披露流程。
+我们认真对待安全漏洞。如果您发现OpenCap中的安全漏洞，请遵循下面概述的负责任披露流程。
 
 ### 📧 如何报告
 
@@ -205,7 +205,7 @@ We appreciate the security research community's efforts to help keep Jietu and o
 
 ### 🏆 认可
 
-我们感谢帮助我们维护Jietu安全的安全研究人员：
+我们感谢帮助我们维护OpenCap安全的安全研究人员：
 
 - **致谢**：我们将在安全公告中致谢您的贡献（经您同意）
 - **名人堂**：安全研究人员将在我们的项目文档中得到认可
@@ -232,7 +232,7 @@ We appreciate the security research community's efforts to help keep Jietu and o
 
 安全公告将发布在：
 
-- **GitHub安全公告**：[GitHub安全选项卡](https://github.com/yourusername/jietu/security/advisories)
+- **GitHub安全公告**：[GitHub安全选项卡](https://github.com/yourusername/openCap/security/advisories)
 - **发布说明**：安全修复将在发布说明中记录
 - **CHANGELOG.md**：安全相关更改将在我们的更新日志中注明
 
@@ -261,7 +261,7 @@ We appreciate the security research community's efforts to help keep Jietu and o
 
 ### 🙏 致谢
 
-我们感谢安全研究社区帮助保持Jietu和我们用户的安全。负责任的披露帮助我们保护用户，同时给我们修复漏洞的机会。
+我们感谢安全研究社区帮助保持OpenCap和我们用户的安全。负责任的披露帮助我们保护用户，同时给我们修复漏洞的机会。
 
 ---
 

@@ -1,14 +1,15 @@
-#include "jietu/ScreenshotRenderer.h"
+#include "openCap/ScreenshotRenderer.h"
+
 #include <QApplication>
-#include <QScreen>
 #include <QFont>
+#include <QScreen>
 
 // 构造函数
-ScreenshotRenderer::ScreenshotRenderer(const QPixmap &screenshot)
-    : m_screenshot(screenshot),
-      m_imageCacheValid(false),
-      m_cachedMagnifierPos(QPoint(-1, -1)),
-      m_cachedColorPos(QPoint(-1, -1))
+ScreenshotRenderer::ScreenshotRenderer(const QPixmap& screenshot)
+  : m_screenshot(screenshot),
+    m_imageCacheValid(false),
+    m_cachedMagnifierPos(QPoint(-1, -1)),
+    m_cachedColorPos(QPoint(-1, -1))
 {
 }
 
@@ -19,7 +20,7 @@ ScreenshotRenderer::~ScreenshotRenderer()
 }
 
 // 绘制背景截图
-void ScreenshotRenderer::drawBackground(QPainter &painter)
+void ScreenshotRenderer::drawBackground(QPainter& painter)
 {
   // 绘制原始截图作为背景，截图已经设置了正确的设备像素比
   // Qt会自动处理Retina屏幕的缩放，确保显示比例正确
@@ -27,7 +28,9 @@ void ScreenshotRenderer::drawBackground(QPainter &painter)
 }
 
 // 绘制半透明遮罩
-void ScreenshotRenderer::drawOverlay(QPainter &painter, const QRect &selectionRect, bool hasSelection)
+void ScreenshotRenderer::drawOverlay(QPainter& painter,
+                                     const QRect& selectionRect,
+                                     bool hasSelection)
 {
   // 绘制半透明黑色遮罩，覆盖整个截图区域
   painter.fillRect(m_screenshot.rect(), QColor(0, 0, 0, 127));
@@ -40,22 +43,21 @@ void ScreenshotRenderer::drawOverlay(QPainter &painter, const QRect &selectionRe
     painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
 
     // 在选择区域重新绘制原始截图，使用正确的设备像素比
-    QScreen *screen = QApplication::primaryScreen();
+    QScreen* screen = QApplication::primaryScreen();
     qreal devicePixelRatio = screen ? screen->devicePixelRatio() : 1.0;
 
     // 计算源区域，考虑设备像素比
-    QRect sourceRect(
-        selectionRect.x() * devicePixelRatio,
-        selectionRect.y() * devicePixelRatio,
-        selectionRect.width() * devicePixelRatio,
-        selectionRect.height() * devicePixelRatio);
+    QRect sourceRect(selectionRect.x() * devicePixelRatio,
+                     selectionRect.y() * devicePixelRatio,
+                     selectionRect.width() * devicePixelRatio,
+                     selectionRect.height() * devicePixelRatio);
 
     painter.drawPixmap(selectionRect, m_screenshot, sourceRect);
   }
 }
 
 // 绘制选择框
-void ScreenshotRenderer::drawSelectionBox(QPainter &painter, const QRect &selectionRect)
+void ScreenshotRenderer::drawSelectionBox(QPainter& painter, const QRect& selectionRect)
 {
   if (!selectionRect.isValid())
     return;
@@ -68,10 +70,13 @@ void ScreenshotRenderer::drawSelectionBox(QPainter &painter, const QRect &select
 }
 
 // 绘制放大镜
-void ScreenshotRenderer::drawMagnifier(QPainter &painter, const QPoint &mousePos, int widgetWidth, int widgetHeight)
+void ScreenshotRenderer::drawMagnifier(QPainter& painter,
+                                       const QPoint& mousePos,
+                                       int widgetWidth,
+                                       int widgetHeight)
 {
   // 获取设备像素比
-  QScreen *screen = QApplication::primaryScreen();
+  QScreen* screen = QApplication::primaryScreen();
   qreal devicePixelRatio = screen ? screen->devicePixelRatio() : 1.0;
 
   // 计算放大镜位置，避免超出屏幕边界
@@ -166,7 +171,7 @@ void ScreenshotRenderer::drawMagnifier(QPainter &painter, const QPoint &mousePos
 }
 
 // 绘制调整锚点
-void ScreenshotRenderer::drawResizeHandles(QPainter &painter, const QRect &selectionRect)
+void ScreenshotRenderer::drawResizeHandles(QPainter& painter, const QRect& selectionRect)
 {
   if (!selectionRect.isValid())
     return;
@@ -189,10 +194,10 @@ void ScreenshotRenderer::drawResizeHandles(QPainter &painter, const QRect &selec
       QPoint(selectionRect.right(), selectionRect.bottom())       // 右下
   };
 
-  for (const QPoint &handle : handles)
+  for (const QPoint& handle : handles)
   {
-    QRect handleRect(handle.x() - HANDLE_SIZE / 2, handle.y() - HANDLE_SIZE / 2,
-                     HANDLE_SIZE, HANDLE_SIZE);
+    QRect handleRect(
+        handle.x() - HANDLE_SIZE / 2, handle.y() - HANDLE_SIZE / 2, HANDLE_SIZE, HANDLE_SIZE);
     painter.drawRect(handleRect);
   }
 
@@ -200,7 +205,7 @@ void ScreenshotRenderer::drawResizeHandles(QPainter &painter, const QRect &selec
 }
 
 // 获取指定位置的像素颜色
-QColor ScreenshotRenderer::getPixelColor(const QPoint &pos) const
+QColor ScreenshotRenderer::getPixelColor(const QPoint& pos) const
 {
   // 检查缓存是否有效
   if (pos == m_cachedColorPos && m_cachedPixelColor.isValid())
@@ -209,7 +214,7 @@ QColor ScreenshotRenderer::getPixelColor(const QPoint &pos) const
   }
 
   // 获取设备像素比
-  QScreen *screen = QApplication::primaryScreen();
+  QScreen* screen = QApplication::primaryScreen();
   qreal devicePixelRatio = screen ? screen->devicePixelRatio() : 1.0;
 
   // 计算在原始截图中的像素位置
@@ -224,8 +229,7 @@ QColor ScreenshotRenderer::getPixelColor(const QPoint &pos) const
   ensureImageCache();
 
   QColor color(0, 0, 0); // 默认黑色
-  if (!m_cachedScreenshotImage.isNull() &&
-      pixelX < m_cachedScreenshotImage.width() &&
+  if (!m_cachedScreenshotImage.isNull() && pixelX < m_cachedScreenshotImage.width() &&
       pixelY < m_cachedScreenshotImage.height())
   {
     color = QColor(m_cachedScreenshotImage.pixel(pixelX, pixelY));
@@ -239,7 +243,7 @@ QColor ScreenshotRenderer::getPixelColor(const QPoint &pos) const
 }
 
 // 颜色转换为十六进制字符串
-QString ScreenshotRenderer::colorToHex(const QColor &color) const
+QString ScreenshotRenderer::colorToHex(const QColor& color) const
 {
   return QString("#%1%2%3")
       .arg(color.red(), 2, 16, QChar('0'))
@@ -260,7 +264,7 @@ void ScreenshotRenderer::clearCache()
 }
 
 // 性能优化：检查放大镜缓存是否有效
-bool ScreenshotRenderer::isMagnifierCacheValid(const QPoint &mousePos) const
+bool ScreenshotRenderer::isMagnifierCacheValid(const QPoint& mousePos) const
 {
   // 如果鼠标位置没有变化，且缓存的像素图有效，则可以重用
   return !m_cachedMagnifierSource.isNull() && m_cachedMagnifierPos == mousePos;
@@ -277,9 +281,9 @@ void ScreenshotRenderer::ensureImageCache() const
 }
 
 // 性能优化：获取放大镜源像素图
-QPixmap ScreenshotRenderer::getMagnifierSourcePixmap(const QPoint &mousePos) const
+QPixmap ScreenshotRenderer::getMagnifierSourcePixmap(const QPoint& mousePos) const
 {
-  QScreen *screen = QApplication::primaryScreen();
+  QScreen* screen = QApplication::primaryScreen();
   qreal devicePixelRatio = screen ? screen->devicePixelRatio() : 1.0;
 
   // 计算要放大的源区域，以鼠标位置为中心
@@ -304,7 +308,8 @@ QPixmap ScreenshotRenderer::getMagnifierSourcePixmap(const QPoint &mousePos) con
 
   // 拷贝并缩放图像
   QPixmap sourcePixmap = m_screenshot.copy(sourceRect);
-  return sourcePixmap.scaled(MAGNIFIER_SIZE, MAGNIFIER_SIZE, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+  return sourcePixmap.scaled(
+      MAGNIFIER_SIZE, MAGNIFIER_SIZE, Qt::KeepAspectRatio, Qt::SmoothTransformation);
 }
 
 // 性能优化：更新背景缓存

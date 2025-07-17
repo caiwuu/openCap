@@ -1,5 +1,5 @@
 name: 🐛 Bug Report
-description: Create a report to help us improve Jietu
+description: Create a report to help us improve OpenCap
 title: '[Bug]: '
 labels: ['bug', 'needs-triage']
 body:
@@ -16,9 +16,9 @@ body:
       label: Prerequisites
       description: Please confirm the following before submitting the bug report
       options:
-        - label: I have read the [README](https://github.com/yourusername/jietu/blob/main/README.md)
+        - label: I have read the [README](https://github.com/yourusername/openCap/blob/main/README.md)
           required: true
-        - label: I have searched [existing issues](https://github.com/yourusername/jietu/issues) to ensure this bug hasn't been reported
+        - label: I have searched [existing issues](https://github.com/yourusername/openCap/issues) to ensure this bug hasn't been reported
           required: true
         - label: I can reproduce this bug consistently
           required: true
@@ -38,7 +38,7 @@ body:
       label: 🔄 Steps to Reproduce
       description: Detailed steps to reproduce the behavior
       placeholder: |
-        1. Launch Jietu
+        1. Launch OpenCap
         2. Click on '...'
         3. Drag to select area '...'
         4. See error...
@@ -90,10 +90,10 @@ body:
       placeholder: 'e.g., Qt 6.5.0'
 
   - type: input
-    id: jietu-version
+    id: openCap-version
     attributes:
-      label: 📦 Jietu Version
-      description: What version of Jietu are you using?
+      label: 📦 OpenCap Version
+      description: What version of OpenCap are you using?
       placeholder: 'e.g., v1.0.0 or commit hash if building from source'
     validations:
       required: true
@@ -102,7 +102,7 @@ body:
     id: installation-method
     attributes:
       label: 📥 Installation Method
-      description: How did you install Jietu?
+      description: How did you install OpenCap?
       options:
         - Built from source (GitHub)
         - Downloaded from GitHub Releases

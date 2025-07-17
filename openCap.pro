@@ -3,7 +3,7 @@
 ######################################################################
 
 TEMPLATE = app
-TARGET = jietu
+TARGET = openCap
 INCLUDEPATH += .
 
 # You can make your code fail to compile if you use deprecated APIs.
@@ -14,13 +14,13 @@ INCLUDEPATH += .
 #DEFINES += QT_DISABLE_DEPRECATED_UP_TO=0x060000 # disables all APIs deprecated in Qt 6.0.0 and earlier
 
 # Input
-HEADERS += include/jietu/MacWindowLevel.h \
-           include/jietu/ScreenshotApp.h \
-           include/jietu/ScreenshotOverlay.h \
-           include/jietu/ScreenshotRenderer.h \
-           include/jietu/ScreenshotRendererGL.h \
-           include/jietu/ScreenshotToolbar.h \
-           include/jietu/SystemTray.h
+HEADERS += include/openCap/MacWindowLevel.h \
+           include/openCap/ScreenshotApp.h \
+           include/openCap/ScreenshotOverlay.h \
+           include/openCap/ScreenshotRenderer.h \
+           include/openCap/ScreenshotRendererGL.h \
+           include/openCap/ScreenshotToolbar.h \
+           include/openCap/SystemTray.h
 SOURCES += test_gpu_simple.cpp \
            /test_gpu_simple.cpp \
            src/GPUTestExample.cpp \
@@ -31,8 +31,8 @@ SOURCES += test_gpu_simple.cpp \
            src/ScreenshotRendererGL.cpp \
            src/ScreenshotToolbar.cpp \
            src/SystemTray.cpp \
-           build/jietu-qt_autogen/mocs_compilation.cpp \
+           build/openCap_autogen/mocs_compilation.cpp \
            build/CMakeFiles/3.31.5/CompilerIdCXX/CMakeCXXCompilerId.cpp
-TRANSLATIONS += build/CMakeFiles/jietu-qt.dir/compiler_depend.ts \
-                build/CMakeFiles/jietu-qt_autogen.dir/compiler_depend.ts \
-                build/CMakeFiles/jietu-qt_autogen_timestamp_deps.dir/compiler_depend.ts
+TRANSLATIONS += build/CMakeFiles/openCap.dir/compiler_depend.ts \
+                build/CMakeFiles/openCap_autogen.dir/compiler_depend.ts \
+                build/CMakeFiles/openCap_autogen_timestamp_deps.dir/compiler_depend.ts

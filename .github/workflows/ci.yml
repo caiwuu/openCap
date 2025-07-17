@@ -44,11 +44,11 @@ jobs:
       - name: Run basic tests
         run: |
           # Check if executable was created
-          test -f build/jietu-qt.app/Contents/MacOS/jietu-qt
+          test -f build/openCap.app/Contents/MacOS/openCap
           echo "✅ Executable created successfully"
 
           # Check bundle structure
-          test -d build/jietu-qt.app/Contents/Resources/icons
+          test -d build/openCap.app/Contents/Resources/icons
           echo "✅ Bundle structure correct"
 
       - name: Create DMG (Release only)
@@ -56,15 +56,15 @@ jobs:
         run: |
           # Create a simple DMG for distribution
           mkdir -p dist
-          cp -R build/jietu-qt.app dist/
-          hdiutil create -volname "Jietu" -srcfolder dist -ov -format UDZO jietu-macos.dmg
+          cp -R build/openCap.app dist/
+          hdiutil create -volname "OpenCap" -srcfolder dist -ov -format UDZO openCap-macos.dmg
 
       - name: Upload DMG artifact
         if: github.event_name == 'release'
         uses: actions/upload-artifact@v3
         with:
-          name: jietu-macos-dmg
-          path: jietu-macos.dmg
+          name: openCap-macos-dmg
+          path: openCap-macos.dmg
 
       - name: Upload to Release
         if: github.event_name == 'release'
@@ -73,8 +73,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ github.event.release.upload_url }}
-          asset_path: ./jietu-macos.dmg
-          asset_name: jietu-${{ github.event.release.tag_name }}-macos.dmg
+          asset_path: ./openCap-macos.dmg
+          asset_name: openCap-${{ github.event.release.tag_name }}-macos.dmg
           asset_content_type: application/octet-stream
 
   build-linux:
@@ -107,7 +107,7 @@ jobs:
       - name: Run basic tests
         run: |
           # Check if executable was created
-          test -f build/jietu-qt
+          test -f build/openCap
           echo "✅ Linux executable created successfully"
 
   code-quality:
@@ -166,4 +166,4 @@ jobs:
 
 # Workflow status badge
 # Add this to your README.md:
-# [![CI/CD](https://github.com/yourusername/jietu/workflows/CI%2FCD%20Pipeline/badge.svg)](https://github.com/yourusername/jietu/actions)
+# [![CI/CD](https://github.com/yourusername/openCap/workflows/CI%2FCD%20Pipeline/badge.svg)](https://github.com/yourusername/openCap/actions)

@@ -3,8 +3,8 @@
 ## 📁 重构后的目录结构
 
 ```
-jietu/
-├── include/jietu/          # 头文件目录
+openCap/
+├── include/openCap/          # 头文件目录
 │   ├── MacWindowLevel.h
 │   ├── ScreenshotApp.h
 │   ├── ScreenshotOverlay.h
@@ -23,8 +23,8 @@ jietu/
 │   ├── USAGE.md
 │   └── PROJECT_STRUCTURE.md
 ├── scripts/                # 脚本目录
-│   ├── start_jietu.sh
-│   └── test_jietu.sh
+│   ├── start_openCap.sh
+│   └── test_openCap.sh
 ├── build/                  # 构建输出目录
 ├── CMakeLists.txt          # CMake构建配置
 └── Info.plist             # macOS应用配置
@@ -33,12 +33,12 @@ jietu/
 ## ✨ 重构的优势
 
 ### 1. **清晰的接口分离**
-- **头文件** (`include/jietu/`): 定义类的接口和公共API
+- **头文件** (`include/openCap/`): 定义类的接口和公共API
 - **源文件** (`src/`): 实现具体功能，隐藏实现细节
 
 ### 2. **命名空间式的头文件组织**
-- 使用 `jietu/` 子目录避免头文件名冲突
-- 在源文件中使用 `#include "jietu/ClassName.h"` 形式
+- 使用 `openCap/` 子目录避免头文件名冲突
+- 在源文件中使用 `#include "openCap/ClassName.h"` 形式
 
 ### 3. **符合C++最佳实践**
 - **标准库开发风格**: 类似于 `<vector>`, `<iostream>` 的组织方式
@@ -55,14 +55,14 @@ jietu/
 ```cmake
 # CMakeLists.txt 中的关键配置
 include_directories(include)
-target_include_directories(jietu-qt PRIVATE include)
+target_include_directories(openCap PRIVATE include)
 ```
 
 ### 源文件中的 Include 语句
 ```cpp
 // 正确的include方式
-#include "jietu/ScreenshotApp.h"
-#include "jietu/SystemTray.h"
+#include "openCap/ScreenshotApp.h"
+#include "openCap/SystemTray.h"
 ```
 
 ## 📋 C++ 项目最佳实践总结
@@ -86,7 +86,7 @@ cmake ..
 make -j$(nproc)
 
 # 运行应用
-./jietu-qt.app/Contents/MacOS/jietu-qt
+./openCap.app/Contents/MacOS/openCap
 ```
 
 这种目录结构适用于中小型C++项目，既保持了代码的清晰组织，又符合现代C++开发的最佳实践。 

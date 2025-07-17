@@ -4,10 +4,10 @@
 
 echo "=== 截图工具测试脚本 ==="
 echo "当前目录: $(pwd)"
-echo "应用路径: $(pwd)/build/jietu-qt.app/Contents/MacOS/jietu-qt"
+echo "应用路径: $(pwd)/build/openCap.app/Contents/MacOS/openCap"
 
 # 检查应用是否存在
-if [ ! -f "build/jietu-qt.app/Contents/MacOS/jietu-qt" ]; then
+if [ ! -f "build/openCap.app/Contents/MacOS/openCap" ]; then
     echo "错误: 找不到应用程序，请先编译"
     echo "运行: cd build && make -j4"
     exit 1
@@ -25,4 +25,4 @@ export QT_LOGGING_RULES="*.debug=true"
 
 # 启动应用
 echo "启动中..."
-cd build && ./jietu-qt.app/Contents/MacOS/jietu-qt 
+cd build && ./openCap.app/Contents/MacOS/openCap 

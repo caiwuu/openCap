@@ -1,4 +1,4 @@
-# Jietu C++ Code Style Configuration
+# OpenCap C++ Code Style Configuration
 # Based on Qt/KDE style with custom adjustments
 
 # Base style
@@ -97,7 +97,7 @@ IncludeCategories:
   - Regex: '^<Q.*>'
     Priority: 2
   # Project headers
-  - Regex: '^"jietu/.*"'
+  - Regex: '^"openCap/.*"'
     Priority: 3
   # Other headers
   - Regex: '.*'

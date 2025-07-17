@@ -1,4 +1,4 @@
-#include "jietu/MacGlobalShortcut.h"
+#include "openCap/MacGlobalShortcut.h"
 
 #ifdef Q_OS_MACOS
 

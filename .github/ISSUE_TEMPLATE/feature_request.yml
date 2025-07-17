@@ -1,5 +1,5 @@
 name: ✨ Feature Request
-description: Suggest an idea for improving Jietu
+description: Suggest an idea for improving OpenCap
 title: '[Feature]: '
 labels: ['enhancement', 'needs-triage']
 body:
@@ -8,7 +8,7 @@ body:
       value: |
         Thank you for suggesting a feature! ✨
 
-        We appreciate your ideas for improving Jietu. Please fill out the form below.
+        We appreciate your ideas for improving OpenCap. Please fill out the form below.
 
   - type: checkboxes
     id: prerequisites
@@ -16,9 +16,9 @@ body:
       label: Prerequisites
       description: Please confirm the following before submitting the feature request
       options:
-        - label: I have read the [README](https://github.com/yourusername/jietu/blob/main/README.md)
+        - label: I have read the [README](https://github.com/yourusername/openCap/blob/main/README.md)
           required: true
-        - label: I have searched [existing issues](https://github.com/yourusername/jietu/issues) to ensure this feature hasn't been requested
+        - label: I have searched [existing issues](https://github.com/yourusername/openCap/issues) to ensure this feature hasn't been requested
           required: true
         - label: This feature would be useful for other users, not just me
           required: true

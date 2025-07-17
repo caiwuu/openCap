@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Jietu代码格式化脚本
+# OpenCap代码格式化脚本
 # 使用clang-format格式化所有C++源文件
 
 set -e  # 遇到错误时退出
@@ -15,7 +15,7 @@ NC='\033[0m' # No Color
 # 项目根目录
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
-echo -e "${BLUE}🎨 Jietu代码格式化工具${NC}"
+echo -e "${BLUE}🎨 OpenCap代码格式化工具${NC}"
 echo -e "${BLUE}=============================${NC}"
 
 # 检查clang-format是否安装

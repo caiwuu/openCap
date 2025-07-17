@@ -51,7 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **High performance**: Native screen capture APIs for responsiveness
 
 ### Initial Release Notes
-This is the first stable release of Jietu, providing a complete QQ-style screenshot experience on macOS. The application runs silently in the system tray and provides instant, high-quality screenshot capabilities with an intuitive user interface.
+This is the first stable release of OpenCap, providing a complete QQ-style screenshot experience on macOS. The application runs silently in the system tray and provides instant, high-quality screenshot capabilities with an intuitive user interface.
 
 ### Known Issues
 - Windows and Linux support is experimental in this release
@@ -83,7 +83,7 @@ Each release follows this structure:
 
 ---
 
-**Full Changelog**: [Compare releases](https://github.com/yourusername/jietu/releases)
+**Full Changelog**: [Compare releases](https://github.com/yourusername/openCap/releases)
 
 ---
 
@@ -136,7 +136,7 @@ Each release follows this structure:
 - **高性能**：原生屏幕捕获API，响应迅速
 
 ### 初始版本说明
-这是Jietu的首个稳定版本，在macOS上提供完整的QQ风格截图体验。应用程序在系统托盘中静默运行，提供即时、高质量的截图功能和直观的用户界面。
+这是OpenCap的首个稳定版本，在macOS上提供完整的QQ风格截图体验。应用程序在系统托盘中静默运行，提供即时、高质量的截图功能和直观的用户界面。
 
 ### 已知问题
 - Windows和Linux支持在此版本中为实验性
@@ -168,4 +168,4 @@ Each release follows this structure:
 
 ---
 
-**完整更新日志**: [比较版本](https://github.com/yourusername/jietu/releases) 
+**完整更新日志**: [比较版本](https://github.com/yourusername/openCap/releases) 

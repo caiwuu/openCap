@@ -5,7 +5,7 @@
 echo "正在启动截图工具..."
 
 # 检查是否已经在运行
-if pgrep -f "jietu-qt" > /dev/null; then
+if pgrep -f "openCap" > /dev/null; then
     echo "截图工具已经在运行中！"
     exit 0
 fi
@@ -14,7 +14,7 @@ fi
 cd "$(dirname "$0")/build"
 
 # 启动应用程序
-./jietu-qt.app/Contents/MacOS/jietu-qt &
+./openCap.app/Contents/MacOS/openCap &
 
 echo "截图工具已启动！"
 echo ""

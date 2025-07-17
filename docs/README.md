@@ -37,7 +37,7 @@ make
 
 3. 运行：
 ```bash
-./jietu-qt.app/Contents/MacOS/jietu-qt
+./openCap.app/Contents/MacOS/openCap
 ```
 
 ### Windows
@@ -72,7 +72,7 @@ cmake --build . --config Release
 ## 文件结构
 
 ```
-jietu-qt/
+openCap/
 ├── CMakeLists.txt          # 构建配置
 ├── main.cpp                # 程序入口
 ├── ScreenshotApp.h/cpp     # 主应用程序类

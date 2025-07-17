@@ -1,19 +1,22 @@
-#include "jietu/ScreenshotOverlay.h"  // 包含截图覆盖层头文件
-#include "jietu/ScreenshotRenderer.h" // 包含截图渲染器头文件
-#include "jietu/ScreenshotToolbar.h"  // 包含截图工具栏头文件
-#include <QApplication>               // 包含Qt应用程序框架
-#include <QScreen>                    // 包含Qt屏幕相关功能
-#include <QClipboard>                 // 包含Qt剪切板功能
-#include <QPaintEvent>                // 包含Qt绘制事件定义
-#include <QFont>                      // 包含Qt字体功能
-#include <QFontMetrics>               // 包含Qt字体度量功能
-#include <QDebug>                     // 包含Qt调试输出功能
-#include <QTimer>                     // 包含Qt定时器功能
-#include <QDateTime>                  // 包含Qt日期时间功能
+#include "openCap/ScreenshotOverlay.h" // 包含截图覆盖层头文件
 
-#ifdef Q_OS_MACOS                 // 如果是macOS平台
-#include <QWindow>                // 包含Qt窗口功能
-#include "jietu/MacWindowLevel.h" // 包含macOS窗口层级控制
+#include <QApplication> // 包含Qt应用程序框架
+#include <QClipboard>   // 包含Qt剪切板功能
+#include <QDateTime>    // 包含Qt日期时间功能
+#include <QDebug>       // 包含Qt调试输出功能
+#include <QFont>        // 包含Qt字体功能
+#include <QFontMetrics> // 包含Qt字体度量功能
+#include <QPaintEvent>  // 包含Qt绘制事件定义
+#include <QScreen>      // 包含Qt屏幕相关功能
+#include <QTimer>       // 包含Qt定时器功能
+
+#include "openCap/ScreenshotRenderer.h" // 包含截图渲染器头文件
+#include "openCap/ScreenshotToolbar.h"  // 包含截图工具栏头文件
+
+#ifdef Q_OS_MACOS    // 如果是macOS平台
+  #include <QWindow> // 包含Qt窗口功能
+
+  #include "openCap/MacWindowLevel.h" // 包含macOS窗口层级控制
 #else
 // 非macOS平台的空实现
 class MacWindowLevel
@@ -27,20 +30,20 @@ public:
 constexpr int MARGIN_TEXT_AND_BG = 8; // 文字和背景的垂直内边距
 
 // 截图覆盖层构造函数，接收截图和父窗口参数
-ScreenshotOverlay::ScreenshotOverlay(const QPixmap &screenshot, QWidget *parent)
-    : QWidget(parent),                                // 调用QWidget基类构造函数
-      m_screenshot(screenshot),                       // 保存传入的截图
-      m_renderer(new ScreenshotRenderer(screenshot)), // 创建渲染器对象
-      m_isSelecting(false),                           // 初始化选择状态为false
-      m_hasSelection(false),                          // 初始化是否有选择区域为false
-      m_isSelectionFinished(false),                   // 初始化选择完成状态为false
-      m_mousePos(QPoint(0, 0)),                       // 初始化鼠标位置为(0,0)
-      m_currentHandle(ResizeHandle::None),            // 初始化当前锚点为无
-      m_isResizing(false),                            // 初始化调整状态为false
-      m_isMoving(false),                              // 初始化移动状态为false
-      m_lastMousePos(QPoint(-1, -1)),                 // 初始化上次鼠标位置
-      m_needsFullRedraw(true),                        // 初始需要完整重绘
-      m_lastUpdateTime(0)                             // 初始化上次更新时间
+ScreenshotOverlay::ScreenshotOverlay(const QPixmap& screenshot, QWidget* parent)
+  : QWidget(parent),                                // 调用QWidget基类构造函数
+    m_screenshot(screenshot),                       // 保存传入的截图
+    m_renderer(new ScreenshotRenderer(screenshot)), // 创建渲染器对象
+    m_isSelecting(false),                           // 初始化选择状态为false
+    m_hasSelection(false),                          // 初始化是否有选择区域为false
+    m_isSelectionFinished(false),                   // 初始化选择完成状态为false
+    m_mousePos(QPoint(0, 0)),                       // 初始化鼠标位置为(0,0)
+    m_currentHandle(ResizeHandle::None),            // 初始化当前锚点为无
+    m_isResizing(false),                            // 初始化调整状态为false
+    m_isMoving(false),                              // 初始化移动状态为false
+    m_lastMousePos(QPoint(-1, -1)),                 // 初始化上次鼠标位置
+    m_needsFullRedraw(true),                        // 初始需要完整重绘
+    m_lastUpdateTime(0)                             // 初始化上次更新时间
 {
   // 立即获取当前鼠标位置，避免从(0,0)闪烁
   QPoint globalMousePos = QCursor::pos(); // 获取全局鼠标位置
@@ -59,18 +62,19 @@ ScreenshotOverlay::ScreenshotOverlay(const QPixmap &screenshot, QWidget *parent)
   setAttribute(Qt::WA_OpaquePaintEvent);       // 不透明绘制事件
 
   // 手动设置窗口几何覆盖整个屏幕，包括状态栏
-  QScreen *screen = QApplication::primaryScreen(); // 获取主屏幕
+  QScreen* screen = QApplication::primaryScreen(); // 获取主屏幕
   if (screen)                                      // 如果屏幕存在
   {
     // 获取完整屏幕区域（包含状态栏），但要考虑设备像素比
     QRect fullGeometry = screen->geometry();             // 获取屏幕完整几何信息
     qreal devicePixelRatio = screen->devicePixelRatio(); // 获取设备像素比
 
-    qDebug() << "屏幕几何信息:";                                                   // 输出调试信息
-    qDebug() << "  - screen->geometry():" << fullGeometry;                         // 输出屏幕几何信息
-    qDebug() << "  - screen->availableGeometry():" << screen->availableGeometry(); // 输出可用屏幕区域
-    qDebug() << "  - devicePixelRatio:" << devicePixelRatio;                       // 输出设备像素比
-    qDebug() << "  - 截图尺寸:" << screenshot.size();                              // 输出截图尺寸
+    qDebug() << "屏幕几何信息:";                           // 输出调试信息
+    qDebug() << "  - screen->geometry():" << fullGeometry; // 输出屏幕几何信息
+    qDebug() << "  - screen->availableGeometry():"
+             << screen->availableGeometry();                 // 输出可用屏幕区域
+    qDebug() << "  - devicePixelRatio:" << devicePixelRatio; // 输出设备像素比
+    qDebug() << "  - 截图尺寸:" << screenshot.size();        // 输出截图尺寸
     // 设置窗口覆盖完整屏幕，从(0,0)开始
     setGeometry(fullGeometry); // 设置窗口几何为完整屏幕
 
@@ -91,9 +95,12 @@ ScreenshotOverlay::ScreenshotOverlay(const QPixmap &screenshot, QWidget *parent)
   setAttribute(Qt::WA_MouseTracking);      // 启用鼠标追踪属性
 
   // 创建定时器来定期检查和恢复窗口状态
-  m_focusTimer = new QTimer(this);                                                       // 创建定时器对象
-  connect(m_focusTimer, &QTimer::timeout, this, &ScreenshotOverlay::ensureWindowActive); // 连接定时器超时信号
-  m_focusTimer->start(250);                                                              // 每250ms检查一次（降低频率）
+  m_focusTimer = new QTimer(this); // 创建定时器对象
+  connect(m_focusTimer,
+          &QTimer::timeout,
+          this,
+          &ScreenshotOverlay::ensureWindowActive); // 连接定时器超时信号
+  m_focusTimer->start(250);                        // 每250ms检查一次（降低频率）
 
   // 设置窗口光标属性（虽然被隐藏，但需要用于事件处理）
   setCursor(Qt::ArrowCursor); // 设置十字光标
@@ -126,7 +133,7 @@ ScreenshotOverlay::~ScreenshotOverlay()
 }
 
 // 绘制事件处理函数
-void ScreenshotOverlay::paintEvent(QPaintEvent *event)
+void ScreenshotOverlay::paintEvent(QPaintEvent* event)
 {
   Q_UNUSED(event) // 标记未使用的参数
 
@@ -163,7 +170,7 @@ void ScreenshotOverlay::paintEvent(QPaintEvent *event)
 }
 
 // 绘制信息文字
-void ScreenshotOverlay::drawInfo(QPainter &painter)
+void ScreenshotOverlay::drawInfo(QPainter& painter)
 {
   Q_UNUSED(painter) // 标记未使用的参数，因为现在使用QLabel
 
@@ -204,7 +211,7 @@ void ScreenshotOverlay::drawInfo(QPainter &painter)
 }
 
 // 鼠标按下事件处理
-void ScreenshotOverlay::mousePressEvent(QMouseEvent *event)
+void ScreenshotOverlay::mousePressEvent(QMouseEvent* event)
 {
   if (event->button() == Qt::LeftButton) // 如果是左键按下
   {
@@ -249,7 +256,7 @@ void ScreenshotOverlay::mousePressEvent(QMouseEvent *event)
 }
 
 // 鼠标移动事件处理
-void ScreenshotOverlay::mouseMoveEvent(QMouseEvent *event)
+void ScreenshotOverlay::mouseMoveEvent(QMouseEvent* event)
 {
   // 始终更新鼠标位置以便绘制放大镜
   QPoint newMousePos = event->pos();
@@ -293,7 +300,7 @@ void ScreenshotOverlay::mouseMoveEvent(QMouseEvent *event)
 }
 
 // 鼠标释放事件处理
-void ScreenshotOverlay::mouseReleaseEvent(QMouseEvent *event)
+void ScreenshotOverlay::mouseReleaseEvent(QMouseEvent* event)
 {
   if (event->button() == Qt::LeftButton) // 如果是左键释放
   {
@@ -339,13 +346,15 @@ void ScreenshotOverlay::mouseReleaseEvent(QMouseEvent *event)
 }
 
 // 键盘按键事件处理
-void ScreenshotOverlay::keyPressEvent(QKeyEvent *event)
+void ScreenshotOverlay::keyPressEvent(QKeyEvent* event)
 {
   if (event->key() == Qt::Key_Escape) // 如果按下ESC键
   {
     qDebug() << "用户取消截图"; // 输出取消信息
     // 使用延迟信号发射，避免在事件处理过程中删除窗口
-    QTimer::singleShot(0, this, [this]()                 // 延迟发射信号
+    QTimer::singleShot(0,
+                       this,
+                       [this]()                          // 延迟发射信号
                        { emit screenshotCancelled(); }); // 发射取消信号
     return;                                              // 不调用父类的事件处理
   }
@@ -357,7 +366,7 @@ void ScreenshotOverlay::keyPressEvent(QKeyEvent *event)
       QColor pixelColor = m_renderer->getPixelColor(m_mousePos);
       QString hexColor = m_renderer->colorToHex(pixelColor);
 
-      QClipboard *clipboard = QApplication::clipboard();
+      QClipboard* clipboard = QApplication::clipboard();
       clipboard->setText(hexColor);
 
       qDebug() << "色值已复制到剪切板:" << hexColor;
@@ -368,7 +377,7 @@ void ScreenshotOverlay::keyPressEvent(QKeyEvent *event)
 }
 
 // 鼠标进入事件处理
-void ScreenshotOverlay::enterEvent(QEnterEvent *event)
+void ScreenshotOverlay::enterEvent(QEnterEvent* event)
 {
   // 确保鼠标进入窗口时位置正确
   QPoint newMousePos = event->position().toPoint(); // 更新鼠标位置
@@ -387,7 +396,7 @@ void ScreenshotOverlay::enterEvent(QEnterEvent *event)
 }
 
 // 鼠标离开事件处理
-void ScreenshotOverlay::leaveEvent(QEvent *event)
+void ScreenshotOverlay::leaveEvent(QEvent* event)
 {
   // 鼠标离开窗口时保持最后的位置，不隐藏放大镜
   // 这样在屏幕边缘时放大镜仍然可见
@@ -425,7 +434,7 @@ void ScreenshotOverlay::updateCursor()
 }
 
 // 根据鼠标位置更新光标
-void ScreenshotOverlay::updateCursor(const QPoint &pos)
+void ScreenshotOverlay::updateCursor(const QPoint& pos)
 {
   if (!m_isSelectionFinished)
   {
@@ -457,25 +466,25 @@ void ScreenshotOverlay::updateCursor(ResizeHandle handle)
 {
   switch (handle)
   {
-  case ResizeHandle::TopLeft:
-  case ResizeHandle::BottomRight:
-    setCursor(Qt::SizeFDiagCursor); // nwse-resize: 西北-东南调整
-    break;
-  case ResizeHandle::TopRight:
-  case ResizeHandle::BottomLeft:
-    setCursor(Qt::SizeBDiagCursor); // nesw-resize: 东北-西南调整
-    break;
-  case ResizeHandle::TopCenter:
-  case ResizeHandle::BottomCenter:
-    setCursor(Qt::SizeVerCursor); // ns-resize: 南北调整（垂直）
-    break;
-  case ResizeHandle::MiddleLeft:
-  case ResizeHandle::MiddleRight:
-    setCursor(Qt::SizeHorCursor); // ew-resize: 东西调整（水平）
-    break;
-  default:
-    setCursor(Qt::ArrowCursor); // 默认箭头光标
-    break;
+    case ResizeHandle::TopLeft:
+    case ResizeHandle::BottomRight:
+      setCursor(Qt::SizeFDiagCursor); // nwse-resize: 西北-东南调整
+      break;
+    case ResizeHandle::TopRight:
+    case ResizeHandle::BottomLeft:
+      setCursor(Qt::SizeBDiagCursor); // nesw-resize: 东北-西南调整
+      break;
+    case ResizeHandle::TopCenter:
+    case ResizeHandle::BottomCenter:
+      setCursor(Qt::SizeVerCursor); // ns-resize: 南北调整（垂直）
+      break;
+    case ResizeHandle::MiddleLeft:
+    case ResizeHandle::MiddleRight:
+      setCursor(Qt::SizeHorCursor); // ew-resize: 东西调整（水平）
+      break;
+    default:
+      setCursor(Qt::ArrowCursor); // 默认箭头光标
+      break;
   }
 }
 
@@ -497,7 +506,7 @@ void ScreenshotOverlay::setWindowLevel()
 
     // 首先获取当前窗口层级用于调试
     int currentLevel = MacWindowLevel::getWindowLevel(windowHandle()->winId()); // 获取当前窗口层级
-    qDebug() << "当前窗口层级:" << currentLevel;                                // 输出当前层级
+    qDebug() << "当前窗口层级:" << currentLevel; // 输出当前层级
 
     // 设置窗口层级高于状态栏
     MacWindowLevel::setWindowAboveStatusBar(windowHandle()->winId()); // 设置窗口层级
@@ -571,7 +580,7 @@ void ScreenshotOverlay::ensureWindowActive()
 }
 
 // 获取鼠标位置对应的锚点
-ScreenshotOverlay::ResizeHandle ScreenshotOverlay::getResizeHandle(const QPoint &pos) const
+ScreenshotOverlay::ResizeHandle ScreenshotOverlay::getResizeHandle(const QPoint& pos) const
 {
   if (!m_hasSelection)
     return ResizeHandle::None;
@@ -580,43 +589,54 @@ ScreenshotOverlay::ResizeHandle ScreenshotOverlay::getResizeHandle(const QPoint 
   const int tolerance = HANDLE_SIZE / 2 + 2; // 增加一点容错
 
   // 检查各个锚点
-  if (QRect(selection.left() - tolerance, selection.top() - tolerance,
-            tolerance * 2, tolerance * 2)
+  if (QRect(selection.left() - tolerance, selection.top() - tolerance, tolerance * 2, tolerance * 2)
           .contains(pos))
     return ResizeHandle::TopLeft;
 
-  if (QRect(selection.center().x() - tolerance, selection.top() - tolerance,
-            tolerance * 2, tolerance * 2)
+  if (QRect(selection.center().x() - tolerance,
+            selection.top() - tolerance,
+            tolerance * 2,
+            tolerance * 2)
           .contains(pos))
     return ResizeHandle::TopCenter;
 
-  if (QRect(selection.right() - tolerance, selection.top() - tolerance,
-            tolerance * 2, tolerance * 2)
+  if (QRect(
+          selection.right() - tolerance, selection.top() - tolerance, tolerance * 2, tolerance * 2)
           .contains(pos))
     return ResizeHandle::TopRight;
 
-  if (QRect(selection.left() - tolerance, selection.center().y() - tolerance,
-            tolerance * 2, tolerance * 2)
+  if (QRect(selection.left() - tolerance,
+            selection.center().y() - tolerance,
+            tolerance * 2,
+            tolerance * 2)
           .contains(pos))
     return ResizeHandle::MiddleLeft;
 
-  if (QRect(selection.right() - tolerance, selection.center().y() - tolerance,
-            tolerance * 2, tolerance * 2)
+  if (QRect(selection.right() - tolerance,
+            selection.center().y() - tolerance,
+            tolerance * 2,
+            tolerance * 2)
           .contains(pos))
     return ResizeHandle::MiddleRight;
 
-  if (QRect(selection.left() - tolerance, selection.bottom() - tolerance,
-            tolerance * 2, tolerance * 2)
+  if (QRect(selection.left() - tolerance,
+            selection.bottom() - tolerance,
+            tolerance * 2,
+            tolerance * 2)
           .contains(pos))
     return ResizeHandle::BottomLeft;
 
-  if (QRect(selection.center().x() - tolerance, selection.bottom() - tolerance,
-            tolerance * 2, tolerance * 2)
+  if (QRect(selection.center().x() - tolerance,
+            selection.bottom() - tolerance,
+            tolerance * 2,
+            tolerance * 2)
           .contains(pos))
     return ResizeHandle::BottomCenter;
 
-  if (QRect(selection.right() - tolerance, selection.bottom() - tolerance,
-            tolerance * 2, tolerance * 2)
+  if (QRect(selection.right() - tolerance,
+            selection.bottom() - tolerance,
+            tolerance * 2,
+            tolerance * 2)
           .contains(pos))
     return ResizeHandle::BottomRight;
 
@@ -624,7 +644,7 @@ ScreenshotOverlay::ResizeHandle ScreenshotOverlay::getResizeHandle(const QPoint 
 }
 
 // 根据锚点调整选择区域
-void ScreenshotOverlay::updateSelection(const QPoint &pos)
+void ScreenshotOverlay::updateSelection(const QPoint& pos)
 {
   if (!m_isResizing || m_currentHandle == ResizeHandle::None)
     return;
@@ -634,32 +654,32 @@ void ScreenshotOverlay::updateSelection(const QPoint &pos)
 
   switch (m_currentHandle)
   {
-  case ResizeHandle::TopLeft:
-    newRect.setTopLeft(newRect.topLeft() + delta);
-    break;
-  case ResizeHandle::TopCenter:
-    newRect.setTop(newRect.top() + delta.y());
-    break;
-  case ResizeHandle::TopRight:
-    newRect.setTopRight(newRect.topRight() + delta);
-    break;
-  case ResizeHandle::MiddleLeft:
-    newRect.setLeft(newRect.left() + delta.x());
-    break;
-  case ResizeHandle::MiddleRight:
-    newRect.setRight(newRect.right() + delta.x());
-    break;
-  case ResizeHandle::BottomLeft:
-    newRect.setBottomLeft(newRect.bottomLeft() + delta);
-    break;
-  case ResizeHandle::BottomCenter:
-    newRect.setBottom(newRect.bottom() + delta.y());
-    break;
-  case ResizeHandle::BottomRight:
-    newRect.setBottomRight(newRect.bottomRight() + delta);
-    break;
-  default:
-    return;
+    case ResizeHandle::TopLeft:
+      newRect.setTopLeft(newRect.topLeft() + delta);
+      break;
+    case ResizeHandle::TopCenter:
+      newRect.setTop(newRect.top() + delta.y());
+      break;
+    case ResizeHandle::TopRight:
+      newRect.setTopRight(newRect.topRight() + delta);
+      break;
+    case ResizeHandle::MiddleLeft:
+      newRect.setLeft(newRect.left() + delta.x());
+      break;
+    case ResizeHandle::MiddleRight:
+      newRect.setRight(newRect.right() + delta.x());
+      break;
+    case ResizeHandle::BottomLeft:
+      newRect.setBottomLeft(newRect.bottomLeft() + delta);
+      break;
+    case ResizeHandle::BottomCenter:
+      newRect.setBottom(newRect.bottom() + delta.y());
+      break;
+    case ResizeHandle::BottomRight:
+      newRect.setBottomRight(newRect.bottomRight() + delta);
+      break;
+    default:
+      return;
   }
 
   // 确保选择区域不会太小
@@ -672,7 +692,7 @@ void ScreenshotOverlay::updateSelection(const QPoint &pos)
 }
 
 // 检测鼠标是否在选择框内部（但不在锚点上）
-bool ScreenshotOverlay::isInsideSelection(const QPoint &pos) const
+bool ScreenshotOverlay::isInsideSelection(const QPoint& pos) const
 {
   if (!m_hasSelection || !m_isSelectionFinished)
     return false;
@@ -688,7 +708,7 @@ bool ScreenshotOverlay::isInsideSelection(const QPoint &pos) const
 }
 
 // 移动选择区域
-void ScreenshotOverlay::moveSelection(const QPoint &pos)
+void ScreenshotOverlay::moveSelection(const QPoint& pos)
 {
   if (!m_isMoving)
     return;
@@ -761,8 +781,7 @@ void ScreenshotOverlay::onCancelButtonClicked()
   qDebug() << "用户取消截图";
 
   // 发射取消信号
-  QTimer::singleShot(0, this, [this]()
-                     { emit screenshotCancelled(); });
+  QTimer::singleShot(0, this, [this]() { emit screenshotCancelled(); });
 }
 
 // 复制到剪切板
@@ -774,7 +793,7 @@ void ScreenshotOverlay::copyToClipboard()
   if (selectionRect.isValid() && !selectionRect.isEmpty())
   {
     // 获取设备像素比
-    QScreen *screen = QApplication::primaryScreen();
+    QScreen* screen = QApplication::primaryScreen();
     qreal devicePixelRatio = screen ? screen->devicePixelRatio() : 1.0;
 
     qDebug() << "设备像素比:" << devicePixelRatio;
@@ -785,11 +804,10 @@ void ScreenshotOverlay::copyToClipboard()
     if (devicePixelRatio != 1.0)
     {
       // 将逻辑坐标转换为物理像素坐标
-      actualRect = QRect(
-          static_cast<int>(selectionRect.x() * devicePixelRatio),
-          static_cast<int>(selectionRect.y() * devicePixelRatio),
-          static_cast<int>(selectionRect.width() * devicePixelRatio),
-          static_cast<int>(selectionRect.height() * devicePixelRatio));
+      actualRect = QRect(static_cast<int>(selectionRect.x() * devicePixelRatio),
+                         static_cast<int>(selectionRect.y() * devicePixelRatio),
+                         static_cast<int>(selectionRect.width() * devicePixelRatio),
+                         static_cast<int>(selectionRect.height() * devicePixelRatio));
       qDebug() << "调整后的物理像素区域:" << actualRect;
     }
 
@@ -803,7 +821,7 @@ void ScreenshotOverlay::copyToClipboard()
     QPixmap croppedPixmap = m_screenshot.copy(actualRect);
 
     // 获取系统剪切板
-    QClipboard *clipboard = QApplication::clipboard();
+    QClipboard* clipboard = QApplication::clipboard();
 
     // 将裁剪后的图片保存到剪切板
     clipboard->setPixmap(croppedPixmap);
@@ -811,8 +829,7 @@ void ScreenshotOverlay::copyToClipboard()
     qDebug() << "截图已保存到剪切板，最终尺寸:" << croppedPixmap.size();
 
     // 发射截图完成信号（传递空区域，因为已经处理完成）
-    QTimer::singleShot(0, this, [this]()
-                       { emit screenshotFinished(QRect()); });
+    QTimer::singleShot(0, this, [this]() { emit screenshotFinished(QRect()); });
   }
   else
   {
@@ -827,8 +844,7 @@ void ScreenshotOverlay::saveToFile()
   qDebug() << "保存截图到文件，区域:" << selectionRect;
 
   // 发射截图完成信号，让上层处理保存逻辑
-  QTimer::singleShot(0, this, [this, selectionRect]()
-                     { emit screenshotFinished(selectionRect); });
+  QTimer::singleShot(0, this, [this, selectionRect]() { emit screenshotFinished(selectionRect); });
 }
 
 // 创建信息标签
@@ -837,15 +853,14 @@ void ScreenshotOverlay::createInfoLabels()
   // 创建顶部提示信息标签
   m_infoLabel = new QLabel(this);
   m_infoLabel->setText("拖拽选择截图区域，按 ESC 键取消");
-  m_infoLabel->setStyleSheet(
-      "QLabel {"
-      "  background-color: rgba(125, 125, 125, 180);"
-      "  color: white;"
-      "  font-family: Arial;"
-      "  font-size: 14px;"
-      "  padding: 8px 20px;"
-      "  border-radius: 4px;"
-      "}");
+  m_infoLabel->setStyleSheet("QLabel {"
+                             "  background-color: rgba(125, 125, 125, 180);"
+                             "  color: white;"
+                             "  font-family: Arial;"
+                             "  font-size: 14px;"
+                             "  padding: 8px 20px;"
+                             "  border-radius: 4px;"
+                             "}");
   m_infoLabel->setAlignment(Qt::AlignCenter);
   m_infoLabel->adjustSize();
   m_infoLabel->setAttribute(Qt::WA_TransparentForMouseEvents);
@@ -858,15 +873,14 @@ void ScreenshotOverlay::createInfoLabels()
 
   // 创建坐标尺寸信息标签（初始隐藏）
   m_coordLabel = new QLabel(this);
-  m_coordLabel->setStyleSheet(
-      "QLabel {"
-      "  background-color: #292c33;"
-      "  color: white;"
-      "  font-family: Arial;"
-      "  font-size: 10px;"
-      "  padding: 8px 20px;"
-      "  border-radius: 6px;"
-      "}");
+  m_coordLabel->setStyleSheet("QLabel {"
+                              "  background-color: #292c33;"
+                              "  color: white;"
+                              "  font-family: Arial;"
+                              "  font-size: 10px;"
+                              "  padding: 8px 20px;"
+                              "  border-radius: 6px;"
+                              "}");
   m_coordLabel->setAlignment(Qt::AlignCenter);
   m_coordLabel->hide(); // 初始隐藏
 }
@@ -878,10 +892,12 @@ void ScreenshotOverlay::createToolbar()
   m_toolbar = new ScreenshotToolbar(this);
 
   // 连接工具栏信号到槽函数
-  connect(m_toolbar, &ScreenshotToolbar::toolSelected,
-          this, &ScreenshotOverlay::onToolbarToolSelected);
-  connect(m_toolbar, &ScreenshotToolbar::actionTriggered,
-          this, &ScreenshotOverlay::onToolbarActionTriggered);
+  connect(
+      m_toolbar, &ScreenshotToolbar::toolSelected, this, &ScreenshotOverlay::onToolbarToolSelected);
+  connect(m_toolbar,
+          &ScreenshotToolbar::actionTriggered,
+          this,
+          &ScreenshotOverlay::onToolbarActionTriggered);
 }
 
 // 性能优化：更新放大镜区域（使用节流的全屏更新）
@@ -932,34 +948,34 @@ void ScreenshotOverlay::onToolbarToolSelected(ScreenshotToolbar::ToolType toolTy
   // 根据工具类型执行相应操作
   switch (toolType)
   {
-  case ScreenshotToolbar::ToolType::Rectangle:
-    qDebug() << "选择矩形工具";
-    // TODO: 实现矩形绘制功能
-    break;
-  case ScreenshotToolbar::ToolType::Step:
-    qDebug() << "选择步骤标注工具";
-    // TODO: 实现步骤标注功能
-    break;
-  case ScreenshotToolbar::ToolType::Arrow:
-    qDebug() << "选择箭头工具";
-    // TODO: 实现箭头绘制功能
-    break;
-  case ScreenshotToolbar::ToolType::Pen:
-    qDebug() << "选择画笔工具";
-    // TODO: 实现画笔绘制功能
-    break;
-  case ScreenshotToolbar::ToolType::Text:
-    qDebug() << "选择文字工具";
-    // TODO: 实现文字添加功能
-    break;
-  case ScreenshotToolbar::ToolType::Mosaic:
-    qDebug() << "选择马赛克工具";
-    // TODO: 实现马赛克功能
-    break;
-  case ScreenshotToolbar::ToolType::Marker:
-    qDebug() << "选择区域高亮工具";
-    // TODO: 实现区域高亮功能
-    break;
+    case ScreenshotToolbar::ToolType::Rectangle:
+      qDebug() << "选择矩形工具";
+      // TODO: 实现矩形绘制功能
+      break;
+    case ScreenshotToolbar::ToolType::Step:
+      qDebug() << "选择步骤标注工具";
+      // TODO: 实现步骤标注功能
+      break;
+    case ScreenshotToolbar::ToolType::Arrow:
+      qDebug() << "选择箭头工具";
+      // TODO: 实现箭头绘制功能
+      break;
+    case ScreenshotToolbar::ToolType::Pen:
+      qDebug() << "选择画笔工具";
+      // TODO: 实现画笔绘制功能
+      break;
+    case ScreenshotToolbar::ToolType::Text:
+      qDebug() << "选择文字工具";
+      // TODO: 实现文字添加功能
+      break;
+    case ScreenshotToolbar::ToolType::Mosaic:
+      qDebug() << "选择马赛克工具";
+      // TODO: 实现马赛克功能
+      break;
+    case ScreenshotToolbar::ToolType::Marker:
+      qDebug() << "选择区域高亮工具";
+      // TODO: 实现区域高亮功能
+      break;
   }
 }
 
@@ -968,23 +984,23 @@ void ScreenshotOverlay::onToolbarActionTriggered(ScreenshotToolbar::ActionType a
   // 根据功能类型执行相应操作
   switch (actionType)
   {
-  case ScreenshotToolbar::ActionType::Undo:
-    qDebug() << "执行撤销操作";
-    // TODO: 实现撤销功能
-    break;
-  case ScreenshotToolbar::ActionType::Pin:
-    qDebug() << "钉在桌面";
-    // TODO: 实现钉在桌面功能
-    break;
-  case ScreenshotToolbar::ActionType::Save:
-    qDebug() << "保存截图到文件";
-    saveToFile();
-    break;
-  case ScreenshotToolbar::ActionType::Ok:
-    onOkButtonClicked();
-    break;
-  case ScreenshotToolbar::ActionType::Cancel:
-    onCancelButtonClicked();
-    break;
+    case ScreenshotToolbar::ActionType::Undo:
+      qDebug() << "执行撤销操作";
+      // TODO: 实现撤销功能
+      break;
+    case ScreenshotToolbar::ActionType::Pin:
+      qDebug() << "钉在桌面";
+      // TODO: 实现钉在桌面功能
+      break;
+    case ScreenshotToolbar::ActionType::Save:
+      qDebug() << "保存截图到文件";
+      saveToFile();
+      break;
+    case ScreenshotToolbar::ActionType::Ok:
+      onOkButtonClicked();
+      break;
+    case ScreenshotToolbar::ActionType::Cancel:
+      onCancelButtonClicked();
+      break;
   }
 }

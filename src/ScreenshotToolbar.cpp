@@ -1,42 +1,57 @@
-#include "jietu/ScreenshotToolbar.h"
-#include <QSvgRenderer>
+#include "openCap/ScreenshotToolbar.h"
+
+#include <QDebug>
 #include <QFileInfo>
 #include <QPainter>
-#include <QDebug>
+#include <QSvgRenderer>
 
 // 样式常量定义
-const QString ScreenshotToolbar::BUTTON_STYLE =
-    "QPushButton {"
-    "  background-color: transparent;"
-    "  color: white;"
-    "  font-size: 14px;"
-    "  border: none;"
-    "  border-radius: 4px;"
-    "  width: 32px;"
-    "  height: 32px;"
-    "  padding: 4px;"
-    "}"
-    "QPushButton:hover {"
-    "  background-color: rgba(255, 255, 255, 0.15);"
-    "  color: white;"
-    "}"
-    "QPushButton:pressed {"
-    "  background-color: rgba(255, 255, 255, 0.25);"
-    "  color: white;"
-    "}"
-    "QPushButton:checked {"
-    "  background-color: rgba(64, 158, 255, 0.8);"
-    "  color: white;"
-    "}";
+const QString ScreenshotToolbar::BUTTON_STYLE = "QPushButton {"
+                                                "  background-color: transparent;"
+                                                "  color: white;"
+                                                "  font-size: 14px;"
+                                                "  border: none;"
+                                                "  border-radius: 4px;"
+                                                "  width: 32px;"
+                                                "  height: 32px;"
+                                                "  padding: 4px;"
+                                                "}"
+                                                "QPushButton:hover {"
+                                                "  background-color: rgba(255, 255, 255, 0.15);"
+                                                "  color: white;"
+                                                "}"
+                                                "QPushButton:pressed {"
+                                                "  background-color: rgba(255, 255, 255, 0.25);"
+                                                "  color: white;"
+                                                "}"
+                                                "QPushButton:checked {"
+                                                "  background-color: rgba(64, 158, 255, 0.8);"
+                                                "  color: white;"
+                                                "}";
 
-const QString ScreenshotToolbar::SEPARATOR_STYLE =
-    "QFrame {"
-    "  background-color: rgba(255, 255, 255, 0.2);"
-    "  border: none;"
-    "}";
+const QString ScreenshotToolbar::SEPARATOR_STYLE = "QFrame {"
+                                                   "  background-color: rgba(255, 255, 255, 0.2);"
+                                                   "  border: none;"
+                                                   "}";
 
-ScreenshotToolbar::ScreenshotToolbar(QWidget *parent)
-    : QWidget(parent), m_mainLayout(nullptr), m_toolButtonGroup(nullptr), m_rectButton(nullptr), m_stepButton(nullptr), m_arrowButton(nullptr), m_penButton(nullptr), m_textButton(nullptr), m_mosaicButton(nullptr), m_markerButton(nullptr), m_undoButton(nullptr), m_pinButton(nullptr), m_saveButton(nullptr), m_okButton(nullptr), m_cancelButton(nullptr), m_separator1(nullptr), m_separator2(nullptr)
+ScreenshotToolbar::ScreenshotToolbar(QWidget* parent)
+  : QWidget(parent),
+    m_mainLayout(nullptr),
+    m_toolButtonGroup(nullptr),
+    m_rectButton(nullptr),
+    m_stepButton(nullptr),
+    m_arrowButton(nullptr),
+    m_penButton(nullptr),
+    m_textButton(nullptr),
+    m_mosaicButton(nullptr),
+    m_markerButton(nullptr),
+    m_undoButton(nullptr),
+    m_pinButton(nullptr),
+    m_saveButton(nullptr),
+    m_okButton(nullptr),
+    m_cancelButton(nullptr),
+    m_separator1(nullptr),
+    m_separator2(nullptr)
 {
   initializeUI();
 }
@@ -55,12 +70,11 @@ void ScreenshotToolbar::initializeUI()
   setAttribute(Qt::WA_StyledBackground, true);
 
   // 设置工具栏样式
-  setStyleSheet(
-      "ScreenshotToolbar {"
-      "  background-color: rgba(42, 42, 42, 240);"
-      "  border-radius: 8px;"
-      "  border: 1px solid rgba(255, 255, 255, 0.1);"
-      "}");
+  setStyleSheet("ScreenshotToolbar {"
+                "  background-color: rgba(42, 42, 42, 240);"
+                "  border-radius: 8px;"
+                "  border: 1px solid rgba(255, 255, 255, 0.1);"
+                "}");
 
   // 创建各个组件
   createToolButtons();
@@ -136,8 +150,10 @@ void ScreenshotToolbar::createToolButtons()
   m_toolButtonGroup->addButton(m_markerButton, static_cast<int>(ToolType::Marker));
 
   // 连接按钮组信号
-  connect(m_toolButtonGroup, &QButtonGroup::buttonClicked,
-          this, &ScreenshotToolbar::onToolButtonClicked);
+  connect(m_toolButtonGroup,
+          &QButtonGroup::buttonClicked,
+          this,
+          &ScreenshotToolbar::onToolButtonClicked);
 }
 
 void ScreenshotToolbar::createFunctionButtons()
@@ -222,7 +238,7 @@ void ScreenshotToolbar::setupLayout()
   m_mainLayout->addWidget(m_okButton);
 }
 
-void ScreenshotToolbar::showAt(const QPoint &position)
+void ScreenshotToolbar::showAt(const QPoint& position)
 {
   move(position);
   show();
@@ -240,7 +256,7 @@ ScreenshotToolbar::ToolType ScreenshotToolbar::getCurrentTool() const
     return ToolType::Rectangle; // 默认工具
   }
 
-  QAbstractButton *checkedButton = m_toolButtonGroup->checkedButton();
+  QAbstractButton* checkedButton = m_toolButtonGroup->checkedButton();
   if (checkedButton)
   {
     int buttonId = m_toolButtonGroup->id(checkedButton);
@@ -258,7 +274,7 @@ void ScreenshotToolbar::setUndoEnabled(bool enabled)
   }
 }
 
-QIcon ScreenshotToolbar::createToolIcon(const QString &iconFileName)
+QIcon ScreenshotToolbar::createToolIcon(const QString& iconFileName)
 {
   // 构建图标文件路径
   QString iconPath = QString("icons/%1").arg(iconFileName);
@@ -271,7 +287,7 @@ QIcon ScreenshotToolbar::createToolIcon(const QString &iconFileName)
   return QIcon();
 }
 
-QIcon ScreenshotToolbar::createWhiteSvgIcon(const QString &svgPath)
+QIcon ScreenshotToolbar::createWhiteSvgIcon(const QString& svgPath)
 {
   // 使用QPainter着色模式（最安全，保持原始结构）
   QSvgRenderer svgRenderer(svgPath);
@@ -304,7 +320,7 @@ QIcon ScreenshotToolbar::createWhiteSvgIcon(const QString &svgPath)
 }
 
 // 槽函数实现
-void ScreenshotToolbar::onToolButtonClicked(QAbstractButton *button)
+void ScreenshotToolbar::onToolButtonClicked(QAbstractButton* button)
 {
   int buttonId = m_toolButtonGroup->id(button);
   ToolType tool = static_cast<ToolType>(buttonId);

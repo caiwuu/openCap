@@ -155,7 +155,7 @@ By submitting this pull request, I confirm that:
 
 ---
 
-**Thank you for contributing to Jietu! 🚀**
+**Thank you for contributing to OpenCap! 🚀**
 
 ---
 
@@ -312,4 +312,4 @@ By submitting this pull request, I confirm that:
 
 ---
 
-**感谢您为Jietu做贡献！🚀** 
+**感谢您为OpenCap做贡献！🚀** 

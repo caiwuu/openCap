@@ -9,19 +9,19 @@
     <string>截图工具</string>
     
     <key>CFBundleExecutable</key>
-    <string>jietu-qt</string>
+    <string>openCap</string>
     
     <key>CFBundleIconFile</key>
     <string></string>
     
     <key>CFBundleIdentifier</key>
-    <string>com.jietu.screenshot</string>
+    <string>com.openCap.screenshot</string>
     
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
     
     <key>CFBundleName</key>
-    <string>jietu-qt</string>
+    <string>openCap</string>
     
     <key>CFBundlePackageType</key>
     <string>APPL</string>

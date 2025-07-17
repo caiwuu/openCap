@@ -1,11 +1,11 @@
-# Jietu - QQ Style Screenshot Tool
+# OpenCap - QQ Style Screenshot Tool
 
-[![CI/CD](https://github.com/yourusername/jietu/workflows/CI%2FCD%20Pipeline/badge.svg)](https://github.com/yourusername/jietu/actions)
+[![CI/CD](https://github.com/yourusername/openCap/workflows/CI%2FCD%20Pipeline/badge.svg)](https://github.com/yourusername/openCap/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Qt Version](https://img.shields.io/badge/Qt-6.2+-blue.svg)](https://www.qt.io/)
-[![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey.svg)](https://github.com/yourusername/jietu)
-[![GitHub release](https://img.shields.io/github/release/yourusername/jietu.svg)](https://github.com/yourusername/jietu/releases)
-[![GitHub stars](https://img.shields.io/github/stars/yourusername/jietu.svg?style=social&label=Star)](https://github.com/yourusername/jietu)
+[![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey.svg)](https://github.com/yourusername/openCap)
+[![GitHub release](https://img.shields.io/github/release/yourusername/openCap.svg)](https://github.com/yourusername/openCap/releases)
+[![GitHub stars](https://img.shields.io/github/stars/yourusername/openCap.svg?style=social&label=Star)](https://github.com/yourusername/openCap)
 
 [English](#english) | [中文](#中文)
 
@@ -41,21 +41,21 @@ A QQ-style screenshot tool built with Qt6, providing a seamless and intuitive sc
 brew install qt6 cmake
 
 # Clone and build
-git clone https://github.com/yourusername/jietu.git
-cd jietu
+git clone https://github.com/yourusername/openCap.git
+cd openCap
 mkdir build && cd build
 cmake ..
 make -j$(sysctl -n hw.ncpu)
 
 # Run
-./jietu-qt.app/Contents/MacOS/jietu-qt
+./openCap.app/Contents/MacOS/openCap
 ```
 
 **Build from Source**:
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/jietu.git
-cd jietu
+git clone https://github.com/yourusername/openCap.git
+cd openCap
 
 # Create build directory
 mkdir build && cd build
@@ -65,15 +65,15 @@ cmake ..
 cmake --build . --config Release
 
 # Run the application
-./jietu-qt.app/Contents/MacOS/jietu-qt  # macOS
+./openCap.app/Contents/MacOS/openCap  # macOS
 # or
-./jietu-qt  # Linux/Windows
+./openCap  # Linux/Windows
 ```
 
 #### First Run Setup
 
-1. **Grant Permissions**: On macOS, go to "System Preferences → Security & Privacy → Privacy → Screen Recording" and add Jietu
-2. **System Tray**: Look for the Jietu icon in your system tray/menu bar
+1. **Grant Permissions**: On macOS, go to "System Preferences → Security & Privacy → Privacy → Screen Recording" and add OpenCap
+2. **System Tray**: Look for the OpenCap icon in your system tray/menu bar
 3. **Start Screenshot**: Double-click the tray icon or right-click → "Take Screenshot"
 
 ### 📖 Usage
@@ -90,8 +90,8 @@ cmake --build . --config Release
 ### 🏗️ Project Structure
 
 ```
-jietu/
-├── include/jietu/          # Header files
+openCap/
+├── include/openCap/          # Header files
 │   ├── ScreenshotApp.h     # Main application
 │   ├── ScreenshotOverlay.h # Screenshot overlay window
 │   ├── ScreenshotRenderer.h # Rendering engine
@@ -114,10 +114,10 @@ cmake -DCMAKE_BUILD_TYPE=Debug ..
 make -j$(nproc)
 
 # Run tests
-./scripts/test_jietu.sh
+./scripts/test_openCap.sh
 
 # Code formatting (if available)
-clang-format -i src/*.cpp include/jietu/*.h
+clang-format -i src/*.cpp include/openCap/*.h
 ```
 
 #### Adding New Source Files
@@ -126,7 +126,7 @@ The project uses CMake's `GLOB_RECURSE` to automatically detect source files. Wh
 
 1. **Add your files** to the appropriate directories:
    - Source files: `src/`
-   - Header files: `include/jietu/`
+   - Header files: `include/openCap/`
 
 2. **Reconfigure CMake** to detect new files:
    ```bash
@@ -198,20 +198,20 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 brew install qt6 cmake
 
 # 克隆并构建
-git clone https://github.com/yourusername/jietu.git
-cd jietu
+git clone https://github.com/yourusername/openCap.git
+cd openCap
 mkdir build && cd build
 cmake ..
 make -j$(sysctl -n hw.ncpu)
 
 # 运行
-./jietu-qt.app/Contents/MacOS/jietu-qt
+./openCap.app/Contents/MacOS/openCap
 ```
 
 #### 首次运行设置
 
-1. **授予权限**: 在macOS上，前往"系统偏好设置 → 安全性与隐私 → 隐私 → 屏幕录制"添加Jietu
-2. **系统托盘**: 在系统托盘/菜单栏查找Jietu图标
+1. **授予权限**: 在macOS上，前往"系统偏好设置 → 安全性与隐私 → 隐私 → 屏幕录制"添加OpenCap
+2. **系统托盘**: 在系统托盘/菜单栏查找OpenCap图标
 3. **开始截图**: 双击托盘图标或右键 → "截图"
 
 ### 📖 使用方法
@@ -229,7 +229,7 @@ make -j$(sysctl -n hw.ncpu)
 
 1. **添加文件** 到相应目录：
    - 源文件：`src/`
-   - 头文件：`include/jietu/`
+   - 头文件：`include/openCap/`
 
 2. **重新配置CMake** 以检测新文件：
    ```bash

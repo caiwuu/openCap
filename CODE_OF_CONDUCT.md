@@ -6,7 +6,7 @@
 
 ## Our Pledge
 
-We as members, contributors, and leaders of the Jietu project pledge to make participation in our community a harassment-free experience for everyone, regardless of age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.
+We as members, contributors, and leaders of the OpenCap project pledge to make participation in our community a harassment-free experience for everyone, regardless of age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.
 
 We pledge to act and interact in ways that contribute to an open, welcoming, diverse, inclusive, and healthy community.
 
@@ -149,7 +149,7 @@ Yes, this Code of Conduct applies equally to all maintainers and contributors.
 
 For questions about this Code of Conduct, please contact:
 
-- **Project Maintainers**: [GitHub Issues](https://github.com/yourusername/jietu/issues)
+- **Project Maintainers**: [GitHub Issues](https://github.com/yourusername/openCap/issues)
 - **Code of Conduct Email**: conduct@your-domain.com
 - **Project Email**: hello@your-domain.com
 
@@ -166,7 +166,7 @@ For questions about this Code of Conduct, please contact:
 
 ## 我们的承诺
 
-作为 Jietu 项目的成员、贡献者和维护者，我们承诺为每个人创造一个开放、友好、多样化、包容且健康的社区环境，不论年龄、体型、明显或隐藏的残疾、民族、性别特征、性别认同与表达、经验水平、教育程度、社会经济地位、国籍、外貌、种族、宗教信仰或性取向如何。
+作为 OpenCap 项目的成员、贡献者和维护者，我们承诺为每个人创造一个开放、友好、多样化、包容且健康的社区环境，不论年龄、体型、明显或隐藏的残疾、民族、性别特征、性别认同与表达、经验水平、教育程度、社会经济地位、国籍、外貌、种族、宗教信仰或性取向如何。
 
 我们承诺以促进开放、友好、多样化、包容且健康的社区的方式行事和互动。
 
@@ -309,7 +309,7 @@ For questions about this Code of Conduct, please contact:
 
 如有关于本行为准则的问题，请联系：
 
-- **项目维护者**: [GitHub Issues](https://github.com/yourusername/jietu/issues)
+- **项目维护者**: [GitHub Issues](https://github.com/yourusername/openCap/issues)
 - **行为准则邮箱**: conduct@your-domain.com
 - **项目邮箱**: hello@your-domain.com
 
