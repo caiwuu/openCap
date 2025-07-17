@@ -1,0 +1,150 @@
+# Build directories
+build/
+build-*/
+debug/
+release/
+out/
+
+# Qt generated files
+*.pro.user
+*.pro.user.*
+*.qbs.user
+*.qbs.user.*
+*.moc
+moc_*.cpp
+moc_*.h
+qrc_*.cpp
+ui_*.h
+*.qmlc
+*.jsc
+Makefile*
+*build-*
+*_qmlcache.qrc
+
+# CMake
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+
+# Qt Creator
+.qtcreator
+*.autosave
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Libraries
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Object files
+*.o
+*.obj
+*.a
+*.lib
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.tmp
+*.temp
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+log/
+logs/
+
+# Temporary files
+*.bak
+*.backup
+*.tmp
+*.temp
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+
+# Python (if any scripts)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+.eggs/
+
+# Generated documentation
+docs/_build/
+docs/html/
+docs/latex/
+
+# Package managers
+node_modules/
+.npm
+.yarn
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Custom application files
+screenshot_*.png
+*.jietu 
