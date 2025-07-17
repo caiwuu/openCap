@@ -1,5 +1,12 @@
 # Jietu - QQ Style Screenshot Tool
 
+[![CI/CD](https://github.com/yourusername/jietu/workflows/CI%2FCD%20Pipeline/badge.svg)](https://github.com/yourusername/jietu/actions)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Qt Version](https://img.shields.io/badge/Qt-6.2+-blue.svg)](https://www.qt.io/)
+[![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey.svg)](https://github.com/yourusername/jietu)
+[![GitHub release](https://img.shields.io/github/release/yourusername/jietu.svg)](https://github.com/yourusername/jietu/releases)
+[![GitHub stars](https://img.shields.io/github/stars/yourusername/jietu.svg?style=social&label=Star)](https://github.com/yourusername/jietu)
+
 [English](#english) | [中文](#中文)
 
 ## English
@@ -113,6 +120,30 @@ make -j$(nproc)
 clang-format -i src/*.cpp include/jietu/*.h
 ```
 
+#### Adding New Source Files
+
+The project uses CMake's `GLOB_RECURSE` to automatically detect source files. When you add new `.cpp` or `.h` files:
+
+1. **Add your files** to the appropriate directories:
+   - Source files: `src/`
+   - Header files: `include/jietu/`
+
+2. **Reconfigure CMake** to detect new files:
+   ```bash
+   # Reconfigure CMake
+   cmake -B build .
+   
+   # Or clean and reconfigure (if having issues)
+   rm -rf build && cmake -B build .
+   ```
+
+3. **Build as usual**:
+   ```bash
+   cmake --build build -j$(nproc)
+   ```
+
+**Note**: Unlike manual file listing, with `GLOB_RECURSE` you don't need to edit `CMakeLists.txt` when adding new files, just reconfigure CMake.
+
 ### 🤝 Contributing
 
 We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
@@ -191,6 +222,30 @@ make -j$(sysctl -n hw.ncpu)
 4. **完成**: 释放鼠标自动保存到桌面
 5. **取消**: 按 `ESC` 键
 6. **退出**: 右键托盘图标 → "退出"
+
+#### 添加新源文件
+
+项目使用CMake的 `GLOB_RECURSE` 来自动检测源文件。当您添加新的 `.cpp` 或 `.h` 文件时：
+
+1. **添加文件** 到相应目录：
+   - 源文件：`src/`
+   - 头文件：`include/jietu/`
+
+2. **重新配置CMake** 以检测新文件：
+   ```bash
+   # 重新配置CMake
+   cmake -B build .
+   
+   # 或者清理后重新配置（如有问题）
+   rm -rf build && cmake -B build .
+   ```
+
+3. **正常构建**：
+   ```bash
+   cmake --build build -j$(nproc)
+   ```
+
+**注意**：与手动列出文件不同，使用 `GLOB_RECURSE` 时添加新文件无需编辑 `CMakeLists.txt`，只需重新配置CMake。
 
 ### 🤝 贡献
 

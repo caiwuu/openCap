@@ -1,0 +1,154 @@
+name: ✨ Feature Request
+description: Suggest an idea for improving Jietu
+title: '[Feature]: '
+labels: ['enhancement', 'needs-triage']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a feature! ✨
+
+        We appreciate your ideas for improving Jietu. Please fill out the form below.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      description: Please confirm the following before submitting the feature request
+      options:
+        - label: I have read the [README](https://github.com/yourusername/jietu/blob/main/README.md)
+          required: true
+        - label: I have searched [existing issues](https://github.com/yourusername/jietu/issues) to ensure this feature hasn't been requested
+          required: true
+        - label: This feature would be useful for other users, not just me
+          required: true
+
+  - type: textarea
+    id: problem-description
+    attributes:
+      label: 🔍 Problem Description
+      description: What problem does this feature solve? What pain point are you experiencing?
+      placeholder: |
+        Describe the problem you're trying to solve...
+
+        Example: "Currently, I have to manually save each screenshot, which is time-consuming when taking multiple screenshots."
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposed-solution
+    attributes:
+      label: 💡 Proposed Solution
+      description: What would you like to see implemented?
+      placeholder: |
+        Describe your ideal solution...
+
+        Example: "Add a bulk save feature that allows users to save multiple screenshots at once."
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternative-solutions
+    attributes:
+      label: 🔄 Alternative Solutions
+      description: Have you considered any alternative approaches?
+      placeholder: |
+        Describe any alternative solutions or features you've considered...
+
+        Example: "Alternatively, an auto-save feature that saves screenshots to a designated folder automatically."
+
+  - type: dropdown
+    id: feature-category
+    attributes:
+      label: 📂 Feature Category
+      description: Which category does this feature belong to?
+      options:
+        - User Interface/UX
+        - Screenshot Capture
+        - Editing Tools
+        - File Management
+        - System Integration
+        - Performance
+        - Accessibility
+        - Cross-platform Support
+        - Other (please specify in details)
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: 🎯 Priority Level
+      description: How important is this feature to you?
+      options:
+        - Low - Nice to have
+        - Medium - Would be helpful
+        - High - Important for my workflow
+        - Critical - Blocking my use of the app
+    validations:
+      required: true
+
+  - type: textarea
+    id: use-cases
+    attributes:
+      label: 🎬 Use Cases
+      description: Describe specific scenarios where this feature would be useful
+      placeholder: |
+        Provide specific examples of how you would use this feature...
+
+        Example:
+        1. When creating tutorial content, I need to take 20+ screenshots quickly
+        2. For documentation, I need consistent file naming conventions
+        3. When sharing with team members, I need to organize screenshots by project
+
+  - type: textarea
+    id: mockups-references
+    attributes:
+      label: 🎨 Mockups/References
+      description: If you have mockups, screenshots, or references from other applications, please share them
+      placeholder: You can drag and drop images here or paste them directly
+
+  - type: dropdown
+    id: implementation-complexity
+    attributes:
+      label: 🔧 Estimated Implementation Complexity
+      description: How complex do you think this feature would be to implement? (This helps with prioritization)
+      options:
+        - Simple - Small UI change or setting
+        - Medium - New feature with moderate complexity
+        - Complex - Major feature requiring significant changes
+        - I'm not sure
+
+  - type: checkboxes
+    id: contribution
+    attributes:
+      label: 🤝 Contribution
+      description: Are you interested in contributing to this feature?
+      options:
+        - label: I would be willing to help with design/planning
+        - label: I would be willing to help with implementation
+        - label: I would be willing to help with testing
+        - label: I would be willing to help with documentation
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: 📝 Additional Context
+      description: Add any other context, screenshots, or information about the feature request
+      placeholder: |
+        Any additional information that might be helpful...
+
+        - Links to similar features in other applications
+        - Technical considerations you're aware of
+        - Compatibility requirements
+        - etc.
+
+  - type: checkboxes
+    id: acknowledgment
+    attributes:
+      label: Acknowledgment
+      options:
+        - label: I understand that feature requests are evaluated based on community interest and maintainer capacity
+          required: true
+        - label: I understand that not all feature requests can be implemented
+          required: true

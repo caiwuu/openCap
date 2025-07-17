@@ -1,0 +1,149 @@
+name: 🐛 Bug Report
+description: Create a report to help us improve Jietu
+title: '[Bug]: '
+labels: ['bug', 'needs-triage']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to report a bug! 🐛
+
+        Please fill out the form below to help us understand and reproduce the issue.
+
+  - type: checkboxes
+    id: prerequisites
+    attributes:
+      label: Prerequisites
+      description: Please confirm the following before submitting the bug report
+      options:
+        - label: I have read the [README](https://github.com/yourusername/jietu/blob/main/README.md)
+          required: true
+        - label: I have searched [existing issues](https://github.com/yourusername/jietu/issues) to ensure this bug hasn't been reported
+          required: true
+        - label: I can reproduce this bug consistently
+          required: true
+
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: 🔍 Bug Description
+      description: A clear and concise description of what the bug is
+      placeholder: Describe what happened and what you expected to happen...
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: 🔄 Steps to Reproduce
+      description: Detailed steps to reproduce the behavior
+      placeholder: |
+        1. Launch Jietu
+        2. Click on '...'
+        3. Drag to select area '...'
+        4. See error...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: ✅ Expected Behavior
+      description: What should have happened instead?
+      placeholder: Describe the expected behavior...
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual-behavior
+    attributes:
+      label: ❌ Actual Behavior
+      description: What actually happened?
+      placeholder: Describe what actually happened...
+    validations:
+      required: true
+
+  - type: dropdown
+    id: operating-system
+    attributes:
+      label: 🖥️ Operating System
+      description: Which operating system are you using?
+      options:
+        - macOS 14 (Sonoma)
+        - macOS 13 (Ventura)
+        - macOS 12 (Monterey)
+        - macOS 11 (Big Sur)
+        - macOS 10.15 (Catalina)
+        - Windows 11
+        - Windows 10
+        - Ubuntu Linux
+        - Other Linux
+        - Other (please specify in additional context)
+    validations:
+      required: true
+
+  - type: input
+    id: qt-version
+    attributes:
+      label: 🔧 Qt Version
+      description: What version of Qt are you using?
+      placeholder: 'e.g., Qt 6.5.0'
+
+  - type: input
+    id: jietu-version
+    attributes:
+      label: 📦 Jietu Version
+      description: What version of Jietu are you using?
+      placeholder: 'e.g., v1.0.0 or commit hash if building from source'
+    validations:
+      required: true
+
+  - type: dropdown
+    id: installation-method
+    attributes:
+      label: 📥 Installation Method
+      description: How did you install Jietu?
+      options:
+        - Built from source (GitHub)
+        - Downloaded from GitHub Releases
+        - Homebrew
+        - Other package manager
+        - Other (please specify)
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: 📸 Screenshots/Screen Recording
+      description: If applicable, add screenshots or screen recordings to help explain your problem
+      placeholder: You can drag and drop images here or paste them directly
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 📋 Console Output/Logs
+      description: If applicable, paste any relevant console output or error logs
+      render: shell
+      placeholder: Paste console output here...
+
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: 📝 Additional Context
+      description: Add any other context about the problem here
+      placeholder: |
+        - Multi-monitor setup details
+        - Display resolution and scaling settings
+        - Any other relevant information...
+
+  - type: checkboxes
+    id: privacy-confirmation
+    attributes:
+      label: Privacy Confirmation
+      description: Please confirm that you understand the privacy implications
+      options:
+        - label: I understand that this issue is public and the information I provide will be visible to everyone
+          required: true
+        - label: I have not included any sensitive personal information in this report
+          required: true
