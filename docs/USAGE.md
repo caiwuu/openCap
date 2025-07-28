@@ -18,7 +18,7 @@ cmake ..
 make -j4
 
 # 运行应用
-./test_jietu.sh
+./test_openCap.sh
 ```
 
 ## 使用方法

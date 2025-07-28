@@ -4,7 +4,7 @@
 
 #include <QtWidgets/QApplication> // 包含Qt应用程序框架
 
-#include "openCap/ScreenshotApp.h" // 包含截图应用程序头文件
+#include "screenshot/core/ScreenshotApp.h" // 包含截图应用程序头文件
 
 // 应用程序主入口函数
 int main(int argc, char* argv[])
