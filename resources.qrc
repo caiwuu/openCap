@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="">
+        <file>icons/arrows_24.svg</file>
+        <file>icons/circle_24.svg</file>
+        <file>icons/close_24.svg</file>
+        <file>icons/download_24.svg</file>
+        <file>icons/edit_24.svg</file>
+        <file>icons/geometry_24.svg</file>
+        <file>icons/highlight_24.svg</file>
+        <file>icons/long_screenshot_24.svg</file>
+        <file>icons/mosaic_24.svg</file>
+        <file>icons/one_circle_24.svg</file>
+        <file>icons/pin_24.svg</file>
+        <file>icons/recall_24.svg</file>
+        <file>icons/rectangle_24.svg</file>
+        <file>icons/text_24.svg</file>
+        <file>icons/textextract_24.svg</file>
+        <file>icons/tick_24.svg</file>
+        <file>icons/watermark_24.svg</file>
+    </qresource>
+</RCC> 

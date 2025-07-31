@@ -2,11 +2,15 @@
 
 #include <QDebug>
 #include <QTimer>
+#include <QWidget>
 
 #include "ScreenshotProcessor.h"
 
 // 构造函数
-EventHandler::EventHandler(QObject* parent) : QObject(parent), m_processor(nullptr) {}
+EventHandler::EventHandler(QObject* parent)
+  : QObject(parent), m_processor(nullptr), m_widget(qobject_cast<QWidget*>(parent))
+{
+}
 
 // 析构函数
 EventHandler::~EventHandler() {}
@@ -20,6 +24,8 @@ void EventHandler::setScreenshotProcessor(ScreenshotProcessor* processor)
 // 处理工具选择
 void EventHandler::handleToolSelected(ScreenshotToolbar::ToolType toolType)
 {
+  // 更新一次渲染
+  m_widget->update();
   // 根据工具类型执行相应操作
   switch (toolType)
   {

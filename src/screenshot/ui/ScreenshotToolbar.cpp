@@ -49,8 +49,11 @@ ScreenshotToolbar::ScreenshotToolbar(QWidget* parent)
     m_saveButton(nullptr),
     m_okButton(nullptr),
     m_cancelButton(nullptr),
+    // 分割线
     m_separator1(nullptr),
-    m_separator2(nullptr)
+    m_separator2(nullptr),
+    // 是否正在编辑
+    m_isEditing(false)
 {
   initializeUI();
 }
@@ -288,6 +291,7 @@ void ScreenshotToolbar::onToolButtonClicked(QAbstractButton* button)
 {
   int buttonId = m_toolButtonGroup->id(button);
   ToolType tool = static_cast<ToolType>(buttonId);
+  m_isEditing = true;
 
   qDebug() << "工具栏：选择工具" << buttonId;
   emit toolSelected(tool);

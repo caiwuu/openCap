@@ -1,5 +1,8 @@
 #include "IconProvider.h"
 
+#include <QApplication>
+#include <QDir>
+#include <QFile>
 #include <QFileInfo>
 #include <QPainter>
 #include <QSvgRenderer>
@@ -7,15 +10,14 @@
 // 创建工具图标
 QIcon IconProvider::createToolIcon(const QString& iconFileName)
 {
-  // 构建图标文件路径
-  QString iconPath = QString("icons/%1").arg(iconFileName);
-
-  // 检查SVG文件是否存在
-  if (fileExists(iconPath))
+  qDebug() << "尝试加载图标:" << iconFileName;
+  QString resourcePath = QString(":/icons/%1").arg(iconFileName);
+  QIcon icon = createWhiteSvgIcon(resourcePath);
+  if (icon.isNull())
   {
-    return createWhiteSvgIcon(iconPath);
+    return QIcon();
   }
-  return QIcon();
+  return icon;
 }
 
 // 创建白色SVG图标

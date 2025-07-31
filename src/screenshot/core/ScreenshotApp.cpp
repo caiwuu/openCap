@@ -47,6 +47,9 @@ ScreenshotApp::ScreenshotApp(QObject* parent) : QObject(parent) // 调用基类�
   {
     qWarning() << "全局快捷键注册失败";
   }
+
+  // 检查屏幕录制权限
+  checkScreenRecordingPermission();
 }
 
 // 析构函数，清理资源
@@ -197,6 +200,25 @@ QPixmap ScreenshotApp::captureFullScreen()
   }
 
   return screenshot; // 返回截图
+}
+
+// 检查屏幕录制权限
+void ScreenshotApp::checkScreenRecordingPermission()
+{
+  // 尝试进行一次测试截图来触发权限请求
+  QScreen* primaryScreen = QApplication::primaryScreen();
+  if (primaryScreen)
+  {
+    QPixmap testScreenshot = primaryScreen->grabWindow(0);
+    if (testScreenshot.isNull())
+    {
+      qDebug() << "屏幕录制权限未授权，请手动授权";
+    }
+    else
+    {
+      qDebug() << "屏幕录制权限已授权";
+    }
+  }
 }
 
 // 裁剪截图并返回裁剪后的像素图

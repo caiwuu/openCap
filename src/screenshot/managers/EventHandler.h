@@ -38,6 +38,7 @@ signals:
 
 private:
   ScreenshotProcessor* m_processor; // 截图处理器引用
+  QWidget* m_widget;
 };
 
 #endif // EVENTHANDLER_H

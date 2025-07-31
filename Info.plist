@@ -15,7 +15,7 @@
     <string></string>
     
     <key>CFBundleIdentifier</key>
-    <string>com.openCap.screenshot</string>
+    <string>com.opencap.app</string>
     
     <key>CFBundleInfoDictionaryVersion</key>
     <string>6.0</string>
@@ -33,7 +33,7 @@
     <string>1</string>
     
     <key>LSMinimumSystemVersion</key>
-    <string>10.15</string>
+    <string>12.0</string>
     
     <key>NSHighResolutionCapable</key>
     <true/>
@@ -46,5 +46,11 @@
     
     <key>NSScreenCaptureDescription</key>
     <string>截图工具需要访问屏幕内容以提供截图功能。</string>
+    
+    <key>NSMicrophoneUsageDescription</key>
+    <string>截图工具需要访问麦克风以录制系统音频。</string>
+    
+    <key>NSSystemAdministrationUsageDescription</key>
+    <string>截图工具需要系统权限以进行屏幕录制。</string>
 </dict>
 </plist> 

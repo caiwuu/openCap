@@ -41,6 +41,8 @@ private:
   void saveScreenshotWithDialog(const QPixmap& croppedPixmap);
   // 私有成员函数：捕获全屏截图并返回像素图
   QPixmap captureFullScreen();
+  // 私有成员函数：检查屏幕录制权限
+  void checkScreenRecordingPermission();
 
   // 私有成员变量
   std::unique_ptr<SystemTray> m_systemTray;               // 系统托盘管理器（智能指针）

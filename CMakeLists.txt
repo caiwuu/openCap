@@ -4,6 +4,15 @@ project(openCap VERSION 1.0 LANGUAGES CXX OBJCXX)
 # 启用compile_commands.json生成
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+# 将部署目标设置为macOS 12.0或更高，与您的Qt版本兼容
+set(CMAKE_OSX_DEPLOYMENT_TARGET "12.0" CACHE STRING "Minimum OS X version" FORCE)
+
+if(CMAKE_BUILD_TYPE STREQUAL "Release")
+    add_definitions(-DQT_NO_DEBUG_OUTPUT)
+    add_definitions(-DNDEBUG)
+    message(STATUS "Release模式：已禁用调试输出")
+endif()
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -42,10 +51,17 @@ if(APPLE)
     # 查找并链接 macOS 框架
     find_library(CARBON_FRAMEWORK Carbon REQUIRED)
     find_library(COCOA_FRAMEWORK Cocoa REQUIRED)
+
+    # 设置编译器标志以确保兼容性
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -mmacosx-version-min=12.0")
+    set(CMAKE_OBJCXX_FLAGS "${CMAKE_OBJCXX_FLAGS} -mmacosx-version-min=12.0")
 endif()
 
+# 添加资源文件
+set(RESOURCES resources.qrc)
+
 # 创建可执行文件
-qt6_add_executable(openCap ${SOURCES})
+qt6_add_executable(openCap ${SOURCES} ${RESOURCES})
 
 # 自动收集所有模块目录作为包含目录
 file(GLOB_RECURSE MODULE_DIRS LIST_DIRECTORIES true "${CMAKE_SOURCE_DIR}/src/*")
@@ -66,9 +82,6 @@ target_include_directories(openCap PRIVATE ${INCLUDE_DIRS})
 # 链接Qt库 (添加了Qt6::Svg支持SVG图标)
 target_link_libraries(openCap PRIVATE Qt6::Core Qt6::Widgets Qt6::Svg)
 
-# 复制icons文件夹到build目录
-file(COPY ${CMAKE_SOURCE_DIR}/icons DESTINATION ${CMAKE_BINARY_DIR})
-
 # macOS特定设置
 if(APPLE)
     # 链接 macOS 框架
@@ -80,11 +93,6 @@ if(APPLE)
         MACOSX_BUNDLE TRUE
         MACOSX_BUNDLE_INFO_PLIST "${CMAKE_SOURCE_DIR}/Info.plist"
     )
-    
-    # 对于Bundle，也复制icons到Bundle的Resources目录
-    add_custom_command(TARGET openCap POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-        ${CMAKE_SOURCE_DIR}/icons $<TARGET_BUNDLE_DIR:openCap>/Contents/Resources/icons)
 endif()
 
 # 安装设置

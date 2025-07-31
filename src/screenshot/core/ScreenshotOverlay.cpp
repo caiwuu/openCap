@@ -203,7 +203,7 @@ void ScreenshotOverlay::paintEvent(QPaintEvent* event)
   m_renderer->drawOverlay(painter, selectionRect, m_selectionManager->hasSelection());
 
   // 绘制选择框
-  if (m_selectionManager->hasSelection())
+  if (m_selectionManager->hasSelection() && !m_toolbar->m_isEditing)
   {
     m_renderer->drawSelectionBox(painter, selectionRect);
 
@@ -218,7 +218,8 @@ void ScreenshotOverlay::paintEvent(QPaintEvent* event)
   drawInfo(painter);
 
   // 绘制放大镜（如果有有效的鼠标位置）
-  if (m_mousePos.x() >= 0 && m_mousePos.y() >= 0 && !m_selectionManager->isSelectionFinished())
+  if (m_mousePos.x() >= 0 && m_mousePos.y() >= 0 && !m_selectionManager->isSelectionFinished() &&
+      !m_toolbar->m_isEditing)
   {
     m_renderer->drawMagnifier(painter, m_mousePos, width(), height());
   }
@@ -247,6 +248,11 @@ void ScreenshotOverlay::mousePressEvent(QMouseEvent* event)
 {
   if (event->button() == Qt::LeftButton) // 如果是左键按下
   {
+    if (m_toolbar->m_isEditing)
+    {
+      return;
+    }
+
     if (m_selectionManager->isSelectionFinished()) // 如果选择已完成
     {
       // 检查是否点击了锚点
@@ -264,15 +270,13 @@ void ScreenshotOverlay::mousePressEvent(QMouseEvent* event)
         hideToolbar(); // 移动开始时隐藏工具栏
         return;
       }
-      else
-      {
-        // 点击了其他地方，重新开始选择
-        hideToolbar(); // 隐藏工具栏
-      }
+    }
+    else
+    {
+      // 开始新的选择
+      m_selectionManager->startSelection(event->pos());
     }
 
-    // 开始新的选择
-    m_selectionManager->startSelection(event->pos());
     m_performanceManager->triggerOptimizedUpdate();
   }
 }
@@ -282,8 +286,10 @@ void ScreenshotOverlay::mouseMoveEvent(QMouseEvent* event)
 {
   // 始终更新鼠标位置以便绘制放大镜
   QPoint newMousePos = event->pos();
-
-  if (m_selectionManager->isResizing()) // 如果正在调整大小
+  if (m_toolbar->m_isEditing)
+  {
+  }
+  else if (m_selectionManager->isResizing()) // 如果正在调整大小
   {
     m_selectionManager->updateResize(event->pos());
     m_performanceManager->triggerOptimizedUpdate();
@@ -374,8 +380,6 @@ void ScreenshotOverlay::keyPressEvent(QKeyEvent* event)
 
       QClipboard* clipboard = QApplication::clipboard();
       clipboard->setText(hexColor);
-
-      qDebug() << "色值已复制到剪切板:" << hexColor;
     }
     return;
   }
