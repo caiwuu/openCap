@@ -104,10 +104,6 @@ private:
   // 分隔线
   QFrame* m_separator1;
   QFrame* m_separator2;
-
-  // 样式常量
-  static const QString BUTTON_STYLE;
-  static const QString SEPARATOR_STYLE;
 };
 
 #endif // SCREENSHOTTOOLBAR_H

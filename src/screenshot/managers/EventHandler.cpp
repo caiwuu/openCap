@@ -30,31 +30,31 @@ void EventHandler::handleToolSelected(ScreenshotToolbar::ToolType toolType)
   switch (toolType)
   {
     case ScreenshotToolbar::ToolType::Rectangle:
-      qDebug() << "选择矩形工具";
+      qDebug() << "矩形工具";
       // TODO: 实现矩形绘制功能
       break;
     case ScreenshotToolbar::ToolType::Step:
-      qDebug() << "选择步骤标注工具";
+      qDebug() << "步骤标注工具";
       // TODO: 实现步骤标注功能
       break;
     case ScreenshotToolbar::ToolType::Arrow:
-      qDebug() << "选择箭头工具";
+      qDebug() << "箭头工具";
       // TODO: 实现箭头绘制功能
       break;
     case ScreenshotToolbar::ToolType::Pen:
-      qDebug() << "选择画笔工具";
+      qDebug() << "画笔工具";
       // TODO: 实现画笔绘制功能
       break;
     case ScreenshotToolbar::ToolType::Text:
-      qDebug() << "选择文字工具";
+      qDebug() << "文字工具";
       // TODO: 实现文字添加功能
       break;
     case ScreenshotToolbar::ToolType::Mosaic:
-      qDebug() << "选择马赛克工具";
+      qDebug() << "马赛克工具";
       // TODO: 实现马赛克功能
       break;
     case ScreenshotToolbar::ToolType::Marker:
-      qDebug() << "选择区域高亮工具";
+      qDebug() << "区域高亮工具";
       // TODO: 实现区域高亮功能
       break;
   }

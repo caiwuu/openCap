@@ -22,8 +22,7 @@ void MacWindowLevel::setWindowAboveStatusBar(quintptr winId) {
 
   // 使用更高的窗口层级来确保在所有系统UI之上
   // NSScreenSaverWindowLevel = 1000, 这比状态栏和所有系统手势都高
-  const NSInteger screenSaverLevel =
-      NSScreenSaverWindowLevel; // 获取屏保窗口层级常量
+  const NSInteger screenSaverLevel = NSStatusWindowLevel;
 
   [window setLevel:screenSaverLevel]; // 设置窗口层级为屏保级别
 

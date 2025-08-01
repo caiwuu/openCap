@@ -71,7 +71,7 @@ void WindowLevelManager::setWindowLevel()
     MacWindowLevel::setWindowAboveStatusBar(m_widget->windowHandle()->winId());
 
     // 禁用系统手势（防止状态栏下拉等）
-    MacWindowLevel::disableSystemGestures(m_widget->windowHandle()->winId());
+    // MacWindowLevel::disableSystemGestures(m_widget->windowHandle()->winId());
 
     // 验证设置结果
     int newLevel = MacWindowLevel::getWindowLevel(m_widget->windowHandle()->winId());
@@ -116,7 +116,7 @@ void WindowLevelManager::ensureWindowActive()
     if (m_widget->windowHandle() && m_widget->windowHandle()->winId())
     {
       MacWindowLevel::setWindowAboveStatusBar(m_widget->windowHandle()->winId());
-      MacWindowLevel::disableSystemGestures(m_widget->windowHandle()->winId());
+      // MacWindowLevel::disableSystemGestures(m_widget->windowHandle()->winId());
     }
 #endif
   }

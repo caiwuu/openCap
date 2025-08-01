@@ -1,44 +1,44 @@
 #ifndef SCREENSHOTRENDERER_H
 #define SCREENSHOTRENDERER_H
 
-#include <QPixmap>
-#include <QPainter>
-#include <QRect>
-#include <QPoint>
 #include <QColor>
+#include <QPainter>
+#include <QPixmap>
+#include <QPoint>
+#include <QRect>
 
 // 截图渲染器类，负责处理所有绘制功能
 class ScreenshotRenderer
 {
 public:
   // 构造函数
-  explicit ScreenshotRenderer(const QPixmap &screenshot);
+  explicit ScreenshotRenderer(const QPixmap& screenshot);
   ~ScreenshotRenderer(); // 析构函数
 
   // 绘制背景截图
-  void drawBackground(QPainter &painter);
+  void drawBackground(QPainter& painter);
 
   // 绘制半透明遮罩
-  void drawOverlay(QPainter &painter, const QRect &selectionRect, bool hasSelection);
+  void drawOverlay(QPainter& painter, const QRect& selectionRect, bool hasSelection);
 
   // 绘制选择框
-  void drawSelectionBox(QPainter &painter, const QRect &selectionRect);
+  void drawSelectionBox(QPainter& painter, const QRect& selectionRect);
 
   // 绘制放大镜（优化版本）
-  void drawMagnifier(QPainter &painter, const QPoint &mousePos, int widgetWidth, int widgetHeight);
+  void drawMagnifier(QPainter& painter, const QPoint& mousePos, int widgetWidth, int widgetHeight);
 
   // 绘制调整锚点
-  void drawResizeHandles(QPainter &painter, const QRect &selectionRect);
+  void drawResizeHandles(QPainter& painter, const QRect& selectionRect);
 
   // 获取指定位置的像素颜色
-  QColor getPixelColor(const QPoint &pos) const;
+  QColor getPixelColor(const QPoint& pos) const;
 
   // 颜色转换为十六进制字符串
-  QString colorToHex(const QColor &color) const;
+  QString colorToHex(const QColor& color) const;
 
   // 性能优化相关函数
   void clearCache();                                        // 清除所有缓存
-  bool isMagnifierCacheValid(const QPoint &mousePos) const; // 检查放大镜缓存是否有效
+  bool isMagnifierCacheValid(const QPoint& mousePos) const; // 检查放大镜缓存是否有效
   void updateBackgroundCache();                             // 更新背景缓存
 
 private:
@@ -61,7 +61,7 @@ private:
 
   // 私有辅助函数
   void ensureImageCache() const;                                  // 确保Image缓存有效
-  QPixmap getMagnifierSourcePixmap(const QPoint &mousePos) const; // 获取放大镜源像素图
+  QPixmap getMagnifierSourcePixmap(const QPoint& mousePos) const; // 获取放大镜源像素图
 };
 
 #endif // SCREENSHOTRENDERER_H

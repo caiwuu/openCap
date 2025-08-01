@@ -1,266 +1,228 @@
-# OpenCap - QQ Style Screenshot Tool
+# OpenCap - 现代化截图工具
 
-[![CI/CD](https://github.com/yourusername/openCap/workflows/CI%2FCD%20Pipeline/badge.svg)](https://github.com/yourusername/openCap/actions)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Qt Version](https://img.shields.io/badge/Qt-6.2+-blue.svg)](https://www.qt.io/)
 [![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Linux%20%7C%20Windows-lightgrey.svg)](https://github.com/yourusername/openCap)
-[![GitHub release](https://img.shields.io/github/release/yourusername/openCap.svg)](https://github.com/yourusername/openCap/releases)
-[![GitHub stars](https://img.shields.io/github/stars/yourusername/openCap.svg?style=social&label=Star)](https://github.com/yourusername/openCap)
+[![C++ Standard](https://img.shields.io/badge/C%2B%2B-17-blue.svg)](https://isocpp.org/)
+[![CMake](https://img.shields.io/badge/CMake-3.16+-green.svg)](https://cmake.org/)
 
-[English](#english) | [中文](#中文)
+一个基于 Qt6 和 C++17 开发的现代化截图工具，提供流畅的屏幕截图体验。
+![alt text](assets/README/image.png)
+![alt text](assets/README/image-1.png)
 
-## English
+## ✨ 主要功能
 
-A QQ-style screenshot tool built with Qt6, providing a seamless and intuitive screen capture experience.
+- 🎯 **智能截图**: 支持区域选择、全屏截图和窗口截图
+- 📱 **系统托盘集成**: 后台运行，通过系统托盘快速访问
+- 🖼️ **实时预览**: 截图时实时显示选择区域和坐标信息
+- 🎨 **现代化界面**: 基于 Qt6 的现代化用户界面
+- ⌨️ **快捷键支持**: 支持全局快捷键和键盘操作
+- 💾 **多种保存方式**: 支持保存到文件、复制到剪贴板
+- 🔍 **高分辨率支持**: 完美支持 Retina 和高分辨率显示器
+- 🍎 **原生 macOS 集成**: 使用 Cocoa API 实现最佳系统集成
+- ⌨️ **原生 体积小**: 只有 400 多 K，占用内存极小
 
-### ✨ Features
+## 🏗️ 技术架构
 
-- 🎯 **QQ-style Interface**: Perfectly mimics QQ's screenshot functionality
-- 📱 **System Tray Integration**: Runs in background with system tray icon
-- 🖼️ **Instant Screen Freeze**: Captures and freezes current screen state immediately
-- 🎨 **Drag Selection**: Interactive area selection with real-time coordinate display
-- ⌨️ **Keyboard Shortcuts**: ESC to cancel, mouse interactions for selection
-- 💾 **Auto Save**: Automatically saves to desktop with timestamp
-- 🔍 **High-DPI Support**: Perfect support for Retina and high-resolution displays
-- 🍎 **Native macOS Integration**: Uses Cocoa APIs for true fullscreen capture
+### 核心技术栈
 
-### 📋 Requirements
+- **Qt6**: 跨平台 GUI 框架
+- **C++17**: 现代 C++ 标准
+- **CMake**: 现代化构建系统
+- **Objective-C++**: macOS 原生 API 集成
 
-- **Operating System**: macOS 10.15+ (primary), Windows 10+, Linux (experimental)
-- **Qt Version**: Qt6.2 or later
-- **Build Tools**: CMake 3.16+, C++17 compiler
-- **macOS Permissions**: Screen Recording permission required
-
-### 🚀 Quick Start
-
-#### Installation
-
-**macOS (Homebrew)**:
-```bash
-# Install dependencies
-brew install qt6 cmake
-
-# Clone and build
-git clone https://github.com/yourusername/openCap.git
-cd openCap
-mkdir build && cd build
-cmake ..
-make -j$(sysctl -n hw.ncpu)
-
-# Run
-./openCap.app/Contents/MacOS/openCap
-```
-
-**Build from Source**:
-```bash
-# Clone repository
-git clone https://github.com/yourusername/openCap.git
-cd openCap
-
-# Create build directory
-mkdir build && cd build
-
-# Configure and build
-cmake ..
-cmake --build . --config Release
-
-# Run the application
-./openCap.app/Contents/MacOS/openCap  # macOS
-# or
-./openCap  # Linux/Windows
-```
-
-#### First Run Setup
-
-1. **Grant Permissions**: On macOS, go to "System Preferences → Security & Privacy → Privacy → Screen Recording" and add OpenCap
-2. **System Tray**: Look for the OpenCap icon in your system tray/menu bar
-3. **Start Screenshot**: Double-click the tray icon or right-click → "Take Screenshot"
-
-### 📖 Usage
-
-1. **Launch**: Application runs in system tray (no main window)
-2. **Screenshot**: 
-   - Double-click tray icon, or
-   - Right-click tray icon → "Take Screenshot"
-3. **Select Area**: Click and drag to select screenshot region
-4. **Complete**: Release mouse to auto-save to desktop
-5. **Cancel**: Press `ESC` key
-6. **Exit**: Right-click tray icon → "Exit"
-
-### 🏗️ Project Structure
+### 项目结构
 
 ```
 openCap/
-├── include/openCap/          # Header files
-│   ├── ScreenshotApp.h     # Main application
-│   ├── ScreenshotOverlay.h # Screenshot overlay window
-│   ├── ScreenshotRenderer.h # Rendering engine
-│   ├── ScreenshotToolbar.h # Toolbar component
-│   ├── SystemTray.h        # System tray management
-│   └── MacWindowLevel.h    # macOS window level control
-├── src/                    # Source files
-├── docs/                   # Documentation
-├── icons/                  # Application icons
-├── scripts/                # Build and test scripts
-├── CMakeLists.txt          # CMake configuration
-└── Info.plist             # macOS bundle info
+├── src/                    # 源代码
+│   ├── main.cpp           # 应用程序入口
+│   ├── screenshot/        # 截图核心功能
+│   │   ├── core/         # 核心应用逻辑
+│   │   ├── managers/     # 功能管理器
+│   │   └── ui/           # 用户界面组件
+│   ├── system/           # 系统集成
+│   ├── platform/         # 平台特定代码
+│   └── utils/            # 工具类
+├── scripts/              # 构建和开发脚本
+├── docs/                 # 项目文档
+└── CMakeLists.txt        # 构建配置
 ```
 
-### 🛠️ Development
+## 🚀 快速开始
+
+### 系统要求
+
+- **操作系统**: macOS 12.0+, Windows 10+, Linux (实验性)
+- **Qt**: Qt6.2 或更高版本
+- **编译器**: 支持 C++17 的编译器 (GCC 7+, Clang 5+, MSVC 2017+)
+- **构建工具**: CMake 3.16+
+
+### 安装依赖
+
+**macOS**:
 
 ```bash
-# Development build with debug info
-cmake -DCMAKE_BUILD_TYPE=Debug ..
-make -j$(nproc)
-
-# Run tests
-./scripts/test_openCap.sh
-
-# Code formatting (if available)
-clang-format -i src/*.cpp include/openCap/*.h
-```
-
-#### Adding New Source Files
-
-The project uses CMake's `GLOB_RECURSE` to automatically detect source files. When you add new `.cpp` or `.h` files:
-
-1. **Add your files** to the appropriate directories:
-   - Source files: `src/`
-   - Header files: `include/openCap/`
-
-2. **Reconfigure CMake** to detect new files:
-   ```bash
-   # Reconfigure CMake
-   cmake -B build .
-   
-   # Or clean and reconfigure (if having issues)
-   rm -rf build && cmake -B build .
-   ```
-
-3. **Build as usual**:
-   ```bash
-   cmake --build build -j$(nproc)
-   ```
-
-**Note**: Unlike manual file listing, with `GLOB_RECURSE` you don't need to edit `CMakeLists.txt` when adding new files, just reconfigure CMake.
-
-### 🤝 Contributing
-
-We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-### 🙏 Acknowledgments
-
-- Inspired by QQ's screenshot functionality
-- Built with [Qt6](https://www.qt.io/) framework
-- Uses native macOS Cocoa APIs for optimal integration
-
----
-
-## 中文
-
-一个使用 Qt6 开发的仿QQ截图工具，提供流畅直观的屏幕截图体验。
-
-### ✨ 功能特点
-
-- 🎯 **QQ风格界面**: 完美复刻QQ截图功能
-- 📱 **系统托盘**: 后台运行，托盘图标控制
-- 🖼️ **瞬间冻结**: 立即捕获并冻结当前屏幕状态
-- 🎨 **拖拽选择**: 交互式区域选择，实时显示坐标
-- ⌨️ **快捷键**: ESC取消，鼠标交互选择
-- 💾 **自动保存**: 自动保存到桌面，带时间戳
-- 🔍 **高分辨率支持**: 完美支持Retina和高分辨率显示器
-- 🍎 **原生macOS集成**: 使用Cocoa API实现真正的全屏截图
-
-### 📋 系统要求
-
-- **操作系统**: macOS 10.15+ (主要支持), Windows 10+, Linux (实验性)
-- **Qt版本**: Qt6.2 或更高版本
-- **构建工具**: CMake 3.16+, C++17 编译器
-- **macOS权限**: 需要屏幕录制权限
-
-### 🚀 快速开始
-
-#### 安装方法
-
-**macOS (Homebrew)**:
-```bash
-# 安装依赖
+# 使用 Homebrew 安装依赖
 brew install qt6 cmake
 
-# 克隆并构建
-git clone https://github.com/yourusername/openCap.git
-cd openCap
-mkdir build && cd build
-cmake ..
-make -j$(sysctl -n hw.ncpu)
-
-# 运行
-./openCap.app/Contents/MacOS/openCap
+# 或者使用 Qt 官方安装器
+# 下载并安装 Qt6.2+ from https://www.qt.io/download
 ```
 
-#### 首次运行设置
+**Ubuntu/Debian**:
 
-1. **授予权限**: 在macOS上，前往"系统偏好设置 → 安全性与隐私 → 隐私 → 屏幕录制"添加OpenCap
-2. **系统托盘**: 在系统托盘/菜单栏查找OpenCap图标
-3. **开始截图**: 双击托盘图标或右键 → "截图"
+```bash
+sudo apt update
+sudo apt install build-essential cmake qt6-base-dev qt6-svg-dev
+```
 
-### 📖 使用方法
+**Windows**:
 
-1. **启动**: 应用在系统托盘运行（无主窗口）
-2. **截图**: 双击托盘图标，或右键托盘图标 → "截图"
-3. **选择区域**: 点击拖拽选择截图区域
-4. **完成**: 释放鼠标自动保存到桌面
-5. **取消**: 按 `ESC` 键
-6. **退出**: 右键托盘图标 → "退出"
+```bash
+# 安装 Visual Studio 2019+ 和 Qt6
+# 或使用 vcpkg
+vcpkg install qt6
+```
 
-#### 添加新源文件
+### 构建项目
 
-项目使用CMake的 `GLOB_RECURSE` 来自动检测源文件。当您添加新的 `.cpp` 或 `.h` 文件时：
+```bash
+# 克隆项目
+git clone https://github.com/yourusername/openCap.git
+cd openCap
 
-1. **添加文件** 到相应目录：
-   - 源文件：`src/`
-   - 头文件：`include/openCap/`
+# 创建构建目录
+./scripts/rebuild.sh
 
-2. **重新配置CMake** 以检测新文件：
-   ```bash
-   # 重新配置CMake
-   cmake -B build .
-   
-   # 或者清理后重新配置（如有问题）
-   rm -rf build && cmake -B build .
-   ```
+# 运行应用
+./build/openCap.app/Contents/MacOS/openCap  # macOS
+# 或
+./build/openCap  # Linux/Windows
 
-3. **正常构建**：
-   ```bash
-   cmake --build build -j$(nproc)
-   ```
+```
 
-**注意**：与手动列出文件不同，使用 `GLOB_RECURSE` 时添加新文件无需编辑 `CMakeLists.txt`，只需重新配置CMake。
+### 开发模式
 
-### 🤝 贡献
+项目提供了便捷的开发脚本：
 
-欢迎贡献代码！请查看 [CONTRIBUTING.md](CONTRIBUTING.md) 了解详情。
+```bash
+# 开发模式（自动重新编译，会执行make、cmake）
+./scripts/dev_watch.sh
 
-### 📝 许可证
+# 构建监控模式 监听build文件夹 重启程序
+./scripts/build_watch.sh
 
-本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
+# 重新构建(添加了文件，会执行make、cmake)
+./scripts/rebuild.sh
+```
 
-### 🙏 致谢
+## 📖 使用指南
 
-- 灵感来源于QQ的截图功能
-- 使用 [Qt6](https://www.qt.io/) 框架构建
-- 使用原生 macOS Cocoa API 实现最佳集成
+### 首次设置
+
+1. **授予权限** (macOS):
+
+   - 前往 "系统偏好设置 → 安全性与隐私 → 隐私 → 屏幕录制"
+   - 添加 OpenCap 到允许列表
+
+2. **启动应用**:
+   - 运行编译后的可执行文件
+   - 应用将在系统托盘显示图标
+
+### 基本操作
+
+- **开始截图**: 双击系统托盘图标或右键选择"截图"
+- **选择区域**: 鼠标拖拽选择截图区域
+- **完成截图**: 释放鼠标自动保存，或按 Enter 键
+- **取消截图**: 按 ESC 键
+- **退出应用**: 右键系统托盘图标选择"退出"
+
+### 高级功能
+
+- **全局快捷键**: Cmd+Shift+A (macOS) 快速截图
+- **颜色拾取**: 按 C 复制到剪切板
+- **剪贴板**: 点 ok 复制到系统剪贴板
+- **文件保存**: 选择文件夹保存图片
+
+## 🛠️ 开发指南
+
+### 代码结构
+
+项目采用模块化设计，主要组件包括：
+
+- **ScreenshotApp**: 主应用程序类
+- **ScreenshotOverlay**: 截图覆盖层界面
+- **ScreenshotProcessor**: 截图处理和保存
+- **SystemTray**: 系统托盘管理
+- **SelectionManager**: 区域选择管理
+
+### 调试技巧
+
+```bash
+# 调试模式构建
+cmake -DCMAKE_BUILD_TYPE=Debug ..
+cmake --build .
+
+# 使用 GDB/LLDB 调试
+lldb ./build/openCap.app/Contents/MacOS/openCap
+```
+
+## 🤝 贡献指南
+
+我们欢迎所有形式的贡献！
+
+### 贡献流程
+
+1. Fork 项目仓库
+2. 创建功能分支 (`git checkout -b feature/amazing-feature`)
+3. 提交更改 (`git commit -m 'Add amazing feature'`)
+4. 推送到分支 (`git push origin feature/amazing-feature`)
+5. 创建 Pull Request
+
+### 代码规范
+
+- 遵循现有的代码风格和命名约定
+- 添加适当的注释和文档
+- 确保代码通过所有测试
+- 更新相关文档
+
+### 报告问题
+
+请使用 GitHub Issues 报告 bug 或提出功能请求，并包含：
+
+- 操作系统和版本信息
+- Qt 版本
+- 详细的错误描述和重现步骤
+
+## 📦 打包发布
+
+项目提供了打包脚本：
+
+```bash
+# macOS ARM 架构打包
+./scripts/package_arm.sh
+
+# macOS Intel 架构打包
+./scripts/package_intel.sh
+```
+
+## 📄 许可证
+
+本项目采用 Apache 2.0 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
+
+## 🙏 致谢
+
+- 感谢 [Qt](https://www.qt.io/) 团队提供的优秀跨平台框架
+- 感谢所有贡献者的辛勤工作
+- 灵感来源于现代截图工具的用户体验设计
+
+## 📞 联系我们
+
+- **项目主页**: [GitHub Repository](https://github.com/yourusername/openCap)
+- **问题反馈**: [GitHub Issues](https://github.com/yourusername/openCap/issues)
+- **讨论交流**: [GitHub Discussions](https://github.com/yourusername/openCap/discussions)
 
 ---
 
-**Star ⭐ this repository if you find it helpful!** 
+⭐ **如果这个项目对您有帮助，请给我们一个 Star！**

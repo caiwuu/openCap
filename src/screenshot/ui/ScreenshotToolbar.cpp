@@ -2,36 +2,9 @@
 
 #include <QDebug>
 
+#include "../../utils/UIUtils.h"
 #include "IconProvider.h"
 
-// 样式常量定义
-const QString ScreenshotToolbar::BUTTON_STYLE = "QPushButton {"
-                                                "  background-color: transparent;"
-                                                "  color: white;"
-                                                "  font-size: 14px;"
-                                                "  border: none;"
-                                                "  border-radius: 4px;"
-                                                "  width: 32px;"
-                                                "  height: 32px;"
-                                                "  padding: 4px;"
-                                                "}"
-                                                "QPushButton:hover {"
-                                                "  background-color: rgba(255, 255, 255, 0.15);"
-                                                "  color: white;"
-                                                "}"
-                                                "QPushButton:pressed {"
-                                                "  background-color: rgba(255, 255, 255, 0.25);"
-                                                "  color: white;"
-                                                "}"
-                                                "QPushButton:checked {"
-                                                "  background-color: rgba(64, 158, 255, 0.8);"
-                                                "  color: white;"
-                                                "}";
-
-const QString ScreenshotToolbar::SEPARATOR_STYLE = "QFrame {"
-                                                   "  background-color: rgba(255, 255, 255, 0.2);"
-                                                   "  border: none;"
-                                                   "}";
 
 ScreenshotToolbar::ScreenshotToolbar(QWidget* parent)
   : QWidget(parent),
@@ -72,11 +45,7 @@ void ScreenshotToolbar::initializeUI()
   setAttribute(Qt::WA_StyledBackground, true);
 
   // 设置工具栏样式
-  setStyleSheet("ScreenshotToolbar {"
-                "  background-color: rgba(42, 42, 42, 240);"
-                "  border-radius: 8px;"
-                "  border: 1px solid rgba(255, 255, 255, 0.1);"
-                "}");
+  setStyleSheet(UIUtilsConstants::DEFAULT_TOOLBAR_STYLE);
 
   // 创建各个组件
   createToolButtons();
@@ -95,60 +64,29 @@ void ScreenshotToolbar::createToolButtons()
   m_toolButtonGroup->setExclusive(true);
 
   // 创建工具按钮
-  m_rectButton = new QPushButton(this);
-  m_rectButton->setIcon(createToolIcon("geometry_24.svg"));
-  m_rectButton->setToolTip("矩形/椭圆");
-  m_rectButton->setCheckable(true);
-  m_rectButton->setStyleSheet(BUTTON_STYLE);
-  m_rectButton->setFixedSize(32, 32);
+  m_rectButton = UIUtils::createToolbarButton({this, "geometry_24.svg", "矩形/椭圆"});
   m_toolButtonGroup->addButton(m_rectButton, static_cast<int>(ToolType::Rectangle));
 
-  m_stepButton = new QPushButton(this);
-  m_stepButton->setIcon(createToolIcon("one_circle_24.svg"));
-  m_stepButton->setToolTip("步骤标注");
-  m_stepButton->setCheckable(true);
-  m_stepButton->setStyleSheet(BUTTON_STYLE);
-  m_stepButton->setFixedSize(32, 32);
+  m_stepButton = UIUtils::createToolbarButton({this, "one_circle_24.svg", "步骤标注"});
   m_toolButtonGroup->addButton(m_stepButton, static_cast<int>(ToolType::Step));
 
-  m_arrowButton = new QPushButton(this);
-  m_arrowButton->setIcon(createToolIcon("arrows_24.svg"));
-  m_arrowButton->setToolTip("绘制箭头");
-  m_arrowButton->setCheckable(true);
-  m_arrowButton->setStyleSheet(BUTTON_STYLE);
-  m_arrowButton->setFixedSize(32, 32);
+  m_arrowButton = UIUtils::createToolbarButton({this, "arrows_24.svg", "绘制箭头"});
   m_toolButtonGroup->addButton(m_arrowButton, static_cast<int>(ToolType::Arrow));
 
-  m_penButton = new QPushButton(this);
-  m_penButton->setIcon(createToolIcon("edit_24.svg"));
-  m_penButton->setToolTip("自由画笔");
-  m_penButton->setCheckable(true);
-  m_penButton->setStyleSheet(BUTTON_STYLE);
-  m_penButton->setFixedSize(32, 32);
+  m_penButton = UIUtils::createToolbarButton({this, "edit_24.svg", "自由画笔"});
   m_toolButtonGroup->addButton(m_penButton, static_cast<int>(ToolType::Pen));
 
-  m_textButton = new QPushButton(this);
-  m_textButton->setIcon(createToolIcon("text_24.svg"));
-  m_textButton->setToolTip("添加文字");
-  m_textButton->setCheckable(true);
-  m_textButton->setStyleSheet(BUTTON_STYLE);
-  m_textButton->setFixedSize(32, 32);
+  m_textButton = UIUtils::createToolbarButton({this, "text_24.svg", "添加文字"});
   m_toolButtonGroup->addButton(m_textButton, static_cast<int>(ToolType::Text));
 
-  m_mosaicButton = new QPushButton(this);
-  m_mosaicButton->setIcon(createToolIcon("mosaic_24.svg"));
-  m_mosaicButton->setToolTip("马赛克");
-  m_mosaicButton->setCheckable(true);
-  m_mosaicButton->setStyleSheet(BUTTON_STYLE);
-  m_mosaicButton->setFixedSize(32, 32);
+  m_mosaicButton = UIUtils::createToolbarButton({this, "mosaic_24.svg", "马赛克"});
   m_toolButtonGroup->addButton(m_mosaicButton, static_cast<int>(ToolType::Mosaic));
 
-  m_markerButton = new QPushButton(this);
-  m_markerButton->setIcon(createToolIcon("highlight_24.svg"));
-  m_markerButton->setToolTip("区域高亮");
-  m_markerButton->setCheckable(true);
-  m_markerButton->setStyleSheet(BUTTON_STYLE);
-  m_markerButton->setFixedSize(32, 32);
+  m_markerButton = UIUtils::createToolbarButton({
+      this,
+      "highlight_24.svg",
+      "区域高亮",
+  });
   m_toolButtonGroup->addButton(m_markerButton, static_cast<int>(ToolType::Marker));
 
   // 连接按钮组信号
@@ -161,39 +99,39 @@ void ScreenshotToolbar::createToolButtons()
 void ScreenshotToolbar::createFunctionButtons()
 {
   // 创建功能按钮
-  m_undoButton = new QPushButton(this);
-  m_undoButton->setIcon(createToolIcon("recall_24.svg"));
-  m_undoButton->setToolTip("撤销上一步");
-  m_undoButton->setStyleSheet(BUTTON_STYLE);
-  m_undoButton->setFixedSize(32, 32);
+  m_undoButton = UIUtils::createToolbarButton({
+      this,
+      "recall_24.svg",
+      "撤销上一步",
+  });
   connect(m_undoButton, &QPushButton::clicked, this, &ScreenshotToolbar::onUndoButtonClicked);
 
-  m_pinButton = new QPushButton(this);
-  m_pinButton->setIcon(createToolIcon("pin_24.svg"));
-  m_pinButton->setToolTip("钉在桌面");
-  m_pinButton->setStyleSheet(BUTTON_STYLE);
-  m_pinButton->setFixedSize(32, 32);
-  connect(m_pinButton, &QPushButton::clicked, this, &ScreenshotToolbar::onPinButtonClicked);
+  m_pinButton = UIUtils::createToolbarButton({
+      this,
+      "pin_24.svg",
+      "钉在桌面",
+  });
+  connect(m_pinButton, &QPushButton::toggled, this, &ScreenshotToolbar::onPinButtonClicked);
 
-  m_saveButton = new QPushButton(this);
-  m_saveButton->setIcon(createToolIcon("download_24.svg"));
-  m_saveButton->setToolTip("保存图片");
-  m_saveButton->setStyleSheet(BUTTON_STYLE);
-  m_saveButton->setFixedSize(32, 32);
+  m_saveButton = UIUtils::createToolbarButton({
+      this,
+      "download_24.svg",
+      "保存图片",
+  });
   connect(m_saveButton, &QPushButton::clicked, this, &ScreenshotToolbar::onSaveButtonClicked);
 
-  m_okButton = new QPushButton(this);
-  m_okButton->setIcon(createToolIcon("tick_24.svg"));
-  m_okButton->setToolTip("复制到剪切板");
-  m_okButton->setStyleSheet(BUTTON_STYLE);
-  m_okButton->setFixedSize(32, 32);
+  m_okButton = UIUtils::createToolbarButton({
+      this,
+      "tick_24.svg",
+      "复制到剪切板",
+  });
   connect(m_okButton, &QPushButton::clicked, this, &ScreenshotToolbar::onOkButtonClicked);
 
-  m_cancelButton = new QPushButton(this);
-  m_cancelButton->setIcon(createToolIcon("close_24.svg"));
-  m_cancelButton->setToolTip("取消");
-  m_cancelButton->setStyleSheet(BUTTON_STYLE);
-  m_cancelButton->setFixedSize(32, 32);
+  m_cancelButton = UIUtils::createToolbarButton({
+      this,
+      "close_24.svg",
+      "取消",
+  });
   connect(m_cancelButton, &QPushButton::clicked, this, &ScreenshotToolbar::onCancelButtonClicked);
 }
 
@@ -203,12 +141,12 @@ void ScreenshotToolbar::setupLayout()
   m_separator1 = new QFrame(this);
   m_separator1->setFrameShape(QFrame::VLine);
   m_separator1->setFixedSize(1, 24);
-  m_separator1->setStyleSheet(SEPARATOR_STYLE);
+  m_separator1->setStyleSheet(UIUtilsConstants::DEFAULT_SEPARATOR_STYLE);
 
   m_separator2 = new QFrame(this);
   m_separator2->setFrameShape(QFrame::VLine);
   m_separator2->setFixedSize(1, 24);
-  m_separator2->setStyleSheet(SEPARATOR_STYLE);
+  m_separator2->setStyleSheet(UIUtilsConstants::DEFAULT_SEPARATOR_STYLE);
 
   // 设置主布局
   m_mainLayout = new QHBoxLayout(this);
